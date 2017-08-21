@@ -1,7 +1,7 @@
-/* 
+/*
  * BitMEX API
  *
- * ## REST API for the BitMEX Trading Platform  [Changelog](/app/apiChangelog)    #### Getting Started   ##### Fetching Data  All REST endpoints are documented below. You can try out any query right from this interface.  Most table queries accept `count`, `start`, and `reverse` params. Set `reverse=true` to get rows newest-first.  Additional documentation regarding filters, timestamps, and authentication is available in [the main API documentation](https://www.bitmex.com/app/restAPI).  *All* table data is available via the [Websocket](/app/wsAPI). We highly recommend using the socket if you want to have the quickest possible data without being subject to ratelimits.  ##### Return Types  By default, all data is returned as JSON. Send `?_format=csv` to get CSV data or `?_format=xml` to get XML data.  ##### Trade Data Queries  *This is only a small subset of what is available, to get you started.*  Fill in the parameters and click the `Try it out!` button to try any of these queries.  * [Pricing Data](#!/Quote/Quote_get)  * [Trade Data](#!/Trade/Trade_get)  * [OrderBook Data](#!/OrderBook/OrderBook_getL2)  * [Settlement Data](#!/Settlement/Settlement_get)  * [Exchange Statistics](#!/Stats/Stats_history)  Every function of the BitMEX.com platform is exposed here and documented. Many more functions are available.  -  ## All API Endpoints  Click to expand a section. 
+ * ## REST API for the BitMEX Trading Platform  [Changelog](/app/apiChangelog)    #### Getting Started   ##### Fetching Data  All REST endpoints are documented below. You can try out any query right from this interface.  Most table queries accept `count`, `start`, and `reverse` params. Set `reverse=true` to get rows newest-first.  Additional documentation regarding filters, timestamps, and authentication is available in [the main API documentation](https://www.bitmex.com/app/restAPI).  *All* table data is available via the [Websocket](/app/wsAPI). We highly recommend using the socket if you want to have the quickest possible data without being subject to ratelimits.  ##### Return Types  By default, all data is returned as JSON. Send `?_format=csv` to get CSV data or `?_format=xml` to get XML data.  ##### Trade Data Queries  *This is only a small subset of what is available, to get you started.*  Fill in the parameters and click the `Try it out!` button to try any of these queries.  * [Pricing Data](#!/Quote/Quote_get)  * [Trade Data](#!/Trade/Trade_get)  * [OrderBook Data](#!/OrderBook/OrderBook_getL2)  * [Settlement Data](#!/Settlement/Settlement_get)  * [Exchange Statistics](#!/Stats/Stats_history)  Every function of the BitMEX.com platform is exposed here and documented. Many more functions are available.  -  ## All API Endpoints  Click to expand a section.
  *
  * OpenAPI spec version: 1.2.0
  * Contact: support@bitmex.com
@@ -23,38 +23,38 @@
 package swagger
 
 import (
-    "errors"
-    "net/url"
-    "time"
-    "encoding/json"
-    "fmt"
-    "strconv"
-    "log"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"log"
+	"net/url"
+	"strconv"
+	"time"
 )
 
 type OrderApi struct {
-    Configuration Configuration
+	Configuration Configuration
 }
 
 func NewOrderApi() *OrderApi {
-    configuration := NewConfiguration()
-    return &OrderApi{Configuration: *configuration,}
+	configuration := NewConfiguration()
+	return &OrderApi{Configuration: *configuration}
 }
 
 func NewOrderApiWithConfig(config *Configuration) *OrderApi {
-    return &OrderApi{Configuration: *config}
+	return &OrderApi{Configuration: *config}
 }
 
 func NewOrderApiWithBasePath(basePath string) *OrderApi {
-    configuration := NewConfiguration()
-    configuration.BasePath = basePath
+	configuration := NewConfiguration()
+	configuration.BasePath = basePath
 
-    return &OrderApi{Configuration: *configuration}
+	return &OrderApi{Configuration: *configuration}
 }
 
 /**
  * Amend the quantity or price of an open order.
- * Send an &#x60;orderID&#x60; or &#x60;origClOrdID&#x60; to identify the order you wish to amend.  Both order quantity and price can be amended. Only one &#x60;qty&#x60; field can be used to amend.  Use the &#x60;leavesQty&#x60; field to specify how much of the order you wish to remain open. This can be useful if you want to adjust your position&#39;s delta by a certain amount, regardless of how much of the order has already filled.  Use the &#x60;simpleOrderQty&#x60; and &#x60;simpleLeavesQty&#x60; fields to specify order size in Bitcoin, rather than contracts. These fields will round up to the nearest contract.  Like order placement, amending can be done in bulk. Simply send a request to &#x60;PUT /api/v1/order/bulk&#x60; with a JSON body of the shape: &#x60;{\&quot;orders\&quot;: [{...}, {...}]}&#x60;, each object containing the fields used in this endpoint. 
+ * Send an &#x60;orderID&#x60; or &#x60;origClOrdID&#x60; to identify the order you wish to amend.  Both order quantity and price can be amended. Only one &#x60;qty&#x60; field can be used to amend.  Use the &#x60;leavesQty&#x60; field to specify how much of the order you wish to remain open. This can be useful if you want to adjust your position&#39;s delta by a certain amount, regardless of how much of the order has already filled.  Use the &#x60;simpleOrderQty&#x60; and &#x60;simpleLeavesQty&#x60; fields to specify order size in Bitcoin, rather than contracts. These fields will round up to the nearest contract.  Like order placement, amending can be done in bulk. Simply send a request to &#x60;PUT /api/v1/order/bulk&#x60; with a JSON body of the shape: &#x60;{\&quot;orders\&quot;: [{...}, {...}]}&#x60;, each object containing the fields used in this endpoint.
  *
  * @param orderID Order ID
  * @param origClOrdID Client Order ID. See POST /order.
@@ -71,63 +71,63 @@ func NewOrderApiWithBasePath(basePath string) *OrderApi {
  */
 func (a OrderApi) OrderAmend(orderID string, origClOrdID string, clOrdID string, simpleOrderQty float64, orderQty float32, simpleLeavesQty float64, leavesQty float32, price float64, stopPx float64, pegOffsetValue float64, text string) (*Order, *APIResponse, error) {
 
-    var httpMethod = "Put"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order"
+	var httpMethod = "Put"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["orderID"] = orderID
-    formParams["origClOrdID"] = origClOrdID
-    formParams["clOrdID"] = clOrdID
-    formParams["simpleOrderQty"] = fmt.Sprintf("%.8f", simpleOrderQty)
-    formParams["orderQty"] = fmt.Sprintf("%.8f", orderQty)
-    formParams["simpleLeavesQty"] = fmt.Sprintf("%.8f", simpleLeavesQty)
-    formParams["leavesQty"] = fmt.Sprintf("%.8f", leavesQty)
-    formParams["price"] = fmt.Sprintf("%.1f", price)
-    formParams["stopPx"] = fmt.Sprintf("%.1f", stopPx)
-    formParams["pegOffsetValue"] = fmt.Sprintf("%.1f", pegOffsetValue)
-    formParams["text"] = text
-    var successPayload = new(Order)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["orderID"] = orderID
+	formParams["origClOrdID"] = origClOrdID
+	formParams["clOrdID"] = clOrdID
+	formParams["simpleOrderQty"] = fmt.Sprintf("%.8f", simpleOrderQty)
+	formParams["orderQty"] = fmt.Sprintf("%.8f", orderQty)
+	formParams["simpleLeavesQty"] = fmt.Sprintf("%.8f", simpleLeavesQty)
+	formParams["leavesQty"] = fmt.Sprintf("%.8f", leavesQty)
+	formParams["price"] = fmt.Sprintf("%.1f", price)
+	formParams["stopPx"] = fmt.Sprintf("%.1f", stopPx)
+	formParams["pegOffsetValue"] = fmt.Sprintf("%.1f", pegOffsetValue)
+	formParams["text"] = text
+	var successPayload = new(Order)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -139,53 +139,53 @@ func (a OrderApi) OrderAmend(orderID string, origClOrdID string, clOrdID string,
  */
 func (a OrderApi) OrderAmendBulk(orders string) ([]Order, *APIResponse, error) {
 
-    var httpMethod = "Put"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order/bulk"
+	var httpMethod = "Put"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order/bulk"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["orders"] = orders
-    var successPayload = new([]Order)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["orders"] = orders
+	var successPayload = new([]Order)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -199,55 +199,55 @@ func (a OrderApi) OrderAmendBulk(orders string) ([]Order, *APIResponse, error) {
  */
 func (a OrderApi) OrderCancel(orderID string, clOrdID string, text string) ([]Order, *APIResponse, error) {
 
-    var httpMethod = "Delete"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order"
+	var httpMethod = "Delete"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["orderID"] = orderID
-    formParams["clOrdID"] = clOrdID
-    formParams["text"] = text
-    var successPayload = new([]Order)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["orderID"] = orderID
+	formParams["clOrdID"] = clOrdID
+	formParams["text"] = text
+	var successPayload = new([]Order)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -260,118 +260,118 @@ func (a OrderApi) OrderCancel(orderID string, clOrdID string, text string) ([]Or
  */
 func (a OrderApi) OrderCancelAll(symbol string, filter string, text string) (*interface{}, *APIResponse, error) {
 
-    var httpMethod = "Delete"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order/all"
+	var httpMethod = "Delete"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order/all"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["symbol"] = symbol
-    formParams["filter"] = filter
-    formParams["text"] = text
-    var successPayload = new(interface{})
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["symbol"] = symbol
+	formParams["filter"] = filter
+	formParams["text"] = text
+	var successPayload = new(interface{})
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Automatically cancel all your orders after a specified timeout.
- * Useful as a dead-man&#39;s switch to ensure your orders are canceled in case of an outage. If called repeatedly, the existing offset will be canceled and a new one will be inserted in its place.  Example usage: call this route at 15s intervals with an offset of 60000 (60s). If this route is not called within 60 seconds, all your orders will be automatically canceled.  This is also available via [WebSocket](https://www.bitmex.com/app/wsAPI#dead-man-s-switch-auto-cancel-). 
+ * Useful as a dead-man&#39;s switch to ensure your orders are canceled in case of an outage. If called repeatedly, the existing offset will be canceled and a new one will be inserted in its place.  Example usage: call this route at 15s intervals with an offset of 60000 (60s). If this route is not called within 60 seconds, all your orders will be automatically canceled.  This is also available via [WebSocket](https://www.bitmex.com/app/wsAPI#dead-man-s-switch-auto-cancel-).
  *
- * @param timeout Timeout in ms. Set to 0 to cancel this timer. 
+ * @param timeout Timeout in ms. Set to 0 to cancel this timer.
  * @return *Object
  */
 func (a OrderApi) OrderCancelAllAfter(timeout float64) (*interface{}, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order/cancelAllAfter"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order/cancelAllAfter"
 
-    // verify the required parameter 'timeout' is set
-    if &timeout == nil {
-        return new(interface{}), nil, errors.New("Missing required parameter 'timeout' when calling OrderApi->OrderCancelAllAfter")
-    }
+	// verify the required parameter 'timeout' is set
+	if &timeout == nil {
+		return new(interface{}), nil, errors.New("Missing required parameter 'timeout' when calling OrderApi->OrderCancelAllAfter")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["timeout"] = fmt.Sprintf("%.f", timeout)
-    var successPayload = new(interface{})
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["timeout"] = fmt.Sprintf("%.f", timeout)
+	var successPayload = new(interface{})
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -384,59 +384,59 @@ func (a OrderApi) OrderCancelAllAfter(timeout float64) (*interface{}, *APIRespon
  */
 func (a OrderApi) OrderClosePosition(symbol string, price float64) (*Order, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order/closePosition"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order/closePosition"
 
-    // verify the required parameter 'symbol' is set
-    if &symbol == nil {
-        return new(Order), nil, errors.New("Missing required parameter 'symbol' when calling OrderApi->OrderClosePosition")
-    }
+	// verify the required parameter 'symbol' is set
+	if &symbol == nil {
+		return new(Order), nil, errors.New("Missing required parameter 'symbol' when calling OrderApi->OrderClosePosition")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["symbol"] = symbol
-    formParams["price"] = fmt.Sprintf("%.1f", price)
-    var successPayload = new(Order)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["symbol"] = symbol
+	formParams["price"] = fmt.Sprintf("%.1f", price)
+	var successPayload = new(Order)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -454,75 +454,75 @@ func (a OrderApi) OrderClosePosition(symbol string, price float64) (*Order, *API
  * @return []Order
  */
 func (a OrderApi) OrderGetOrders(symbol string, filter string, columns string, count float32, start float32,
-    reverse bool, startTime time.Time, endTime time.Time) ([]Order, *APIResponse, error) {
+	reverse bool, startTime time.Time, endTime time.Time) ([]Order, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("symbol", a.Configuration.APIClient.ParameterToString(symbol, ""))
-    queryParams.Add("filter", a.Configuration.APIClient.ParameterToString(filter, ""))
-    queryParams.Add("columns", a.Configuration.APIClient.ParameterToString(columns, ""))
-    queryParams.Add("count", a.Configuration.APIClient.ParameterToString(fmt.Sprintf("%.f", count), ""))
-    queryParams.Add("start", a.Configuration.APIClient.ParameterToString(fmt.Sprintf("%.f", start), ""))
-    queryParams.Add("reverse", a.Configuration.APIClient.ParameterToString(strconv.FormatBool(reverse), ""))
-    queryParams.Add("startTime", a.Configuration.APIClient.ParameterToString(startTime.Format("2006-01-02 15:04"), ""))
-    queryParams.Add("endTime", a.Configuration.APIClient.ParameterToString(endTime.Format("2006-01-02 15:04"), ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("symbol", a.Configuration.APIClient.ParameterToString(symbol, ""))
+	queryParams.Add("filter", a.Configuration.APIClient.ParameterToString(filter, ""))
+	queryParams.Add("columns", a.Configuration.APIClient.ParameterToString(columns, ""))
+	queryParams.Add("count", a.Configuration.APIClient.ParameterToString(fmt.Sprintf("%.f", count), ""))
+	queryParams.Add("start", a.Configuration.APIClient.ParameterToString(fmt.Sprintf("%.f", start), ""))
+	queryParams.Add("reverse", a.Configuration.APIClient.ParameterToString(strconv.FormatBool(reverse), ""))
+	queryParams.Add("startTime", a.Configuration.APIClient.ParameterToString(startTime.Format("2006-01-02 15:04"), ""))
+	queryParams.Add("endTime", a.Configuration.APIClient.ParameterToString(endTime.Format("2006-01-02 15:04"), ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    SetApiHeader(headerParams, &a.Configuration, httpMethod, path, formParams, queryParams)
-    var successPayload = new([]Order)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    if httpResponse.StatusCode() != 200 {
-        log.Println(httpResponse.Status())
-        errErr := new(ModelError)
-        err = json.Unmarshal(httpResponse.Body(), errErr)
-        log.Println(string(httpResponse.Body()))
-        log.Println(*errErr)
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	SetApiHeader(headerParams, &a.Configuration, httpMethod, path, formParams, queryParams)
+	var successPayload = new([]Order)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	if httpResponse.StatusCode() != 200 {
+		log.Println(httpResponse.Status())
+		errErr := new(ModelError)
+		err = json.Unmarshal(httpResponse.Body(), errErr)
+		log.Println(string(httpResponse.Body()))
+		log.Println(*errErr)
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Create a new order.
- * This endpoint is used for placing orders. Valid order types are Market, Limit, Stop, StopLimit, MarketIfTouched, LimitIfTouched, MarketWithLeftOverAsLimit, and Pegged.  If no order type is provided, BitMEX will assume &#39;Limit&#39;. Be very careful with &#39;Market&#39; and &#39;Stop&#39; orders as you may be filled at an unfavourable price.  You can submit bulk orders by POSTing an array of orders to &#x60;/api/v1/order/bulk&#x60;. Send a JSON payload with the shape: &#x60;{\&quot;orders\&quot;: [{...}, {...}]}&#x60;, with each inner object containing the same fields that would be sent to this endpoint.  A note on API tools: if you want to keep track of order IDs yourself, set a unique clOrdID per order. This clOrdID will come back as a property on the order and any related executions (including on the WebSocket), and can be used to get or cancel the order. Max length is 36 characters.  To generate a clOrdID, consider setting a prefix, and incrementing a counter or generating a UUID. Some UUIDs are longer than 36 characters, so use a url-safe base64 encoding. For example, the prefix &#x60;&#39;bmex_mm_&#39;&#x60; and the UUID &#x60;&#39;7fbd6545-bb0c-11e4-a273-6003088a7c04&#39;&#x60; creates &#x60;&#39;bmex_mm_f71lRbsMEeSic2ADCIp8BA&#39;&#x60;.  See the [BitMEX Reference Market Maker](https://github.com/BitMEX/market-maker/blob/22c75a2b6db63e20212813e9afdb845db1b09b2a/bitmex.py#L152) for an example of how to use and generate clOrdIDs. 
+ * This endpoint is used for placing orders. Valid order types are Market, Limit, Stop, StopLimit, MarketIfTouched, LimitIfTouched, MarketWithLeftOverAsLimit, and Pegged.  If no order type is provided, BitMEX will assume &#39;Limit&#39;. Be very careful with &#39;Market&#39; and &#39;Stop&#39; orders as you may be filled at an unfavourable price.  You can submit bulk orders by POSTing an array of orders to &#x60;/api/v1/order/bulk&#x60;. Send a JSON payload with the shape: &#x60;{\&quot;orders\&quot;: [{...}, {...}]}&#x60;, with each inner object containing the same fields that would be sent to this endpoint.  A note on API tools: if you want to keep track of order IDs yourself, set a unique clOrdID per order. This clOrdID will come back as a property on the order and any related executions (including on the WebSocket), and can be used to get or cancel the order. Max length is 36 characters.  To generate a clOrdID, consider setting a prefix, and incrementing a counter or generating a UUID. Some UUIDs are longer than 36 characters, so use a url-safe base64 encoding. For example, the prefix &#x60;&#39;bmex_mm_&#39;&#x60; and the UUID &#x60;&#39;7fbd6545-bb0c-11e4-a273-6003088a7c04&#39;&#x60; creates &#x60;&#39;bmex_mm_f71lRbsMEeSic2ADCIp8BA&#39;&#x60;.  See the [BitMEX Reference Market Maker](https://github.com/BitMEX/market-maker/blob/22c75a2b6db63e20212813e9afdb845db1b09b2a/bitmex.py#L152) for an example of how to use and generate clOrdIDs.
  *
  * @param symbol Instrument symbol. e.g. &#39;XBT24H&#39;.
  * @param side Order side. Valid options: Buy, Sell. Defaults to &#39;Buy&#39; unless &#x60;orderQty&#x60; or &#x60;simpleOrderQty&#x60; is negative.
@@ -547,133 +547,133 @@ func (a OrderApi) OrderGetOrders(symbol string, filter string, columns string, c
  */
 func (a OrderApi) OrderNew(symbol string, side string, simpleOrderQty float64, quantity float32, orderQty float32, price float64, displayQty float32, stopPrice float64, stopPx float64, clOrdID string, clOrdLinkID string, pegOffsetValue float64, pegPriceType string, type_ string, ordType string, timeInForce string, execInst string, contingencyType string, text string) (*Order, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order"
 
-    // verify the required parameter 'symbol' is set
-    if &symbol == nil {
-        return new(Order), nil, errors.New("Missing required parameter 'symbol' when calling OrderApi->OrderNew")
-    }
+	// verify the required parameter 'symbol' is set
+	if &symbol == nil {
+		return new(Order), nil, errors.New("Missing required parameter 'symbol' when calling OrderApi->OrderNew")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    //var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	//var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["symbol"] = symbol
-    formParams["side"] = side
-    formParams["simpleOrderQty"] = fmt.Sprintf("%.8f", simpleOrderQty)
-    formParams["quantity"] = fmt.Sprintf("%.8f", quantity)
-    formParams["orderQty"] = fmt.Sprintf("%.8f", orderQty)
-    formParams["price"] = fmt.Sprintf("%.1f", price)
-    formParams["displayQty"] = fmt.Sprintf("%.8f", displayQty)
-    formParams["stopPrice"] = fmt.Sprintf("%.1f", stopPrice)
-    formParams["stopPx"] = fmt.Sprintf("%.1f", stopPx)
-    formParams["clOrdID"] = clOrdID
-    formParams["clOrdLinkID"] = clOrdLinkID
-    formParams["pegOffsetValue"] = fmt.Sprintf("%.1f", pegOffsetValue)
-    formParams["pegPriceType"] = pegPriceType
-    formParams["type_"] = type_
-    formParams["ordType"] = ordType
-    formParams["timeInForce"] = timeInForce
-    formParams["execInst"] = execInst
-    formParams["contingencyType"] = contingencyType
-    formParams["text"] = text
-    var successPayload = new(Order)
-    SetApiHeader(headerParams, &a.Configuration, httpMethod, path, formParams, queryParams)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, formParams, headerParams, queryParams, nil, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["symbol"] = symbol
+	formParams["side"] = side
+	formParams["simpleOrderQty"] = fmt.Sprintf("%.8f", simpleOrderQty)
+	formParams["quantity"] = fmt.Sprintf("%.8f", quantity)
+	formParams["orderQty"] = fmt.Sprintf("%.8f", orderQty)
+	formParams["price"] = fmt.Sprintf("%.1f", price)
+	formParams["displayQty"] = fmt.Sprintf("%.8f", displayQty)
+	formParams["stopPrice"] = fmt.Sprintf("%.1f", stopPrice)
+	formParams["stopPx"] = fmt.Sprintf("%.1f", stopPx)
+	formParams["clOrdID"] = clOrdID
+	formParams["clOrdLinkID"] = clOrdLinkID
+	formParams["pegOffsetValue"] = fmt.Sprintf("%.1f", pegOffsetValue)
+	formParams["pegPriceType"] = pegPriceType
+	formParams["type_"] = type_
+	formParams["ordType"] = ordType
+	formParams["timeInForce"] = timeInForce
+	formParams["execInst"] = execInst
+	formParams["contingencyType"] = contingencyType
+	formParams["text"] = text
+	var successPayload = new(Order)
+	SetApiHeader(headerParams, &a.Configuration, httpMethod, path, formParams, queryParams)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, formParams, headerParams, queryParams, nil, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Create multiple new orders.
- * This endpoint is used for placing bulk orders. Valid order types are Market, Limit, Stop, StopLimit, MarketIfTouched, LimitIfTouched, MarketWithLeftOverAsLimit, and Pegged.  Each individual order object in the array should have the same properties as an individual POST /order call.  This endpoint is much faster for getting many orders into the book at once. Because it reduces load on BitMEX systems, this endpoint is ratelimited at &#x60;ceil(0.5 * orders)&#x60;. Submitting 10 orders via a bulk order call will only count as 5 requests.  For now, only &#x60;application/json&#x60; is supported on this endpoint. 
+ * This endpoint is used for placing bulk orders. Valid order types are Market, Limit, Stop, StopLimit, MarketIfTouched, LimitIfTouched, MarketWithLeftOverAsLimit, and Pegged.  Each individual order object in the array should have the same properties as an individual POST /order call.  This endpoint is much faster for getting many orders into the book at once. Because it reduces load on BitMEX systems, this endpoint is ratelimited at &#x60;ceil(0.5 * orders)&#x60;. Submitting 10 orders via a bulk order call will only count as 5 requests.  For now, only &#x60;application/json&#x60; is supported on this endpoint.
  *
  * @param orders An array of orders.
  * @return []Order
  */
 func (a OrderApi) OrderNewBulk(orders string) ([]Order, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/order/bulk"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/order/bulk"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["orders"] = orders
-    var successPayload = new([]Order)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["orders"] = orders
+	var successPayload = new([]Order)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }

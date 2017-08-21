@@ -1,7 +1,7 @@
-/* 
+/*
  * BitMEX API
  *
- * ## REST API for the BitMEX Trading Platform  [Changelog](/app/apiChangelog)    #### Getting Started   ##### Fetching Data  All REST endpoints are documented below. You can try out any query right from this interface.  Most table queries accept `count`, `start`, and `reverse` params. Set `reverse=true` to get rows newest-first.  Additional documentation regarding filters, timestamps, and authentication is available in [the main API documentation](https://www.bitmex.com/app/restAPI).  *All* table data is available via the [Websocket](/app/wsAPI). We highly recommend using the socket if you want to have the quickest possible data without being subject to ratelimits.  ##### Return Types  By default, all data is returned as JSON. Send `?_format=csv` to get CSV data or `?_format=xml` to get XML data.  ##### Trade Data Queries  *This is only a small subset of what is available, to get you started.*  Fill in the parameters and click the `Try it out!` button to try any of these queries.  * [Pricing Data](#!/Quote/Quote_get)  * [Trade Data](#!/Trade/Trade_get)  * [OrderBook Data](#!/OrderBook/OrderBook_getL2)  * [Settlement Data](#!/Settlement/Settlement_get)  * [Exchange Statistics](#!/Stats/Stats_history)  Every function of the BitMEX.com platform is exposed here and documented. Many more functions are available.  -  ## All API Endpoints  Click to expand a section. 
+ * ## REST API for the BitMEX Trading Platform  [Changelog](/app/apiChangelog)    #### Getting Started   ##### Fetching Data  All REST endpoints are documented below. You can try out any query right from this interface.  Most table queries accept `count`, `start`, and `reverse` params. Set `reverse=true` to get rows newest-first.  Additional documentation regarding filters, timestamps, and authentication is available in [the main API documentation](https://www.bitmex.com/app/restAPI).  *All* table data is available via the [Websocket](/app/wsAPI). We highly recommend using the socket if you want to have the quickest possible data without being subject to ratelimits.  ##### Return Types  By default, all data is returned as JSON. Send `?_format=csv` to get CSV data or `?_format=xml` to get XML data.  ##### Trade Data Queries  *This is only a small subset of what is available, to get you started.*  Fill in the parameters and click the `Try it out!` button to try any of these queries.  * [Pricing Data](#!/Quote/Quote_get)  * [Trade Data](#!/Trade/Trade_get)  * [OrderBook Data](#!/OrderBook/OrderBook_getL2)  * [Settlement Data](#!/Settlement/Settlement_get)  * [Exchange Statistics](#!/Stats/Stats_history)  Every function of the BitMEX.com platform is exposed here and documented. Many more functions are available.  -  ## All API Endpoints  Click to expand a section.
  *
  * OpenAPI spec version: 1.2.0
  * Contact: support@bitmex.com
@@ -23,212 +23,212 @@
 package swagger
 
 import (
-    "errors"
-    "net/url"
-    "encoding/json"
-    "fmt"
-    "strconv"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/url"
+	"strconv"
 )
 
 type UserApi struct {
-    Configuration Configuration
+	Configuration Configuration
 }
 
 func NewUserApi() *UserApi {
-    configuration := NewConfiguration()
-    return &UserApi{Configuration: *configuration,}
+	configuration := NewConfiguration()
+	return &UserApi{Configuration: *configuration}
 }
 
 func NewUserApiWithConfig(config *Configuration) *UserApi {
-    return &UserApi{Configuration: *config}
+	return &UserApi{Configuration: *config}
 }
 
 func NewUserApiWithBasePath(basePath string) *UserApi {
-    configuration := NewConfiguration()
-    configuration.BasePath = basePath
+	configuration := NewConfiguration()
+	configuration.BasePath = basePath
 
-    return &UserApi{Configuration: *configuration,}
+	return &UserApi{Configuration: *configuration}
 }
 
 /**
  * Cancel a withdrawal.
  *
- * @param token 
+ * @param token
  * @return *Transaction
  */
 func (a UserApi) UserCancelWithdrawal(token string) (*Transaction, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/cancelWithdrawal"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/cancelWithdrawal"
 
-    // verify the required parameter 'token' is set
-    if &token == nil {
-        return new(Transaction), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserCancelWithdrawal")
-    }
+	// verify the required parameter 'token' is set
+	if &token == nil {
+		return new(Transaction), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserCancelWithdrawal")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["token"] = token
-    var successPayload = new(Transaction)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["token"] = token
+	var successPayload = new(Transaction)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Check if a referral code is valid.
  * If the code is valid, responds with the referral code&#39;s discount (e.g. &#x60;0.1&#x60; for 10%). Otherwise, will return a 404.
  *
- * @param referralCode 
+ * @param referralCode
  * @return *float64
  */
 func (a UserApi) UserCheckReferralCode(referralCode string) (*float64, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/checkReferralCode"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/checkReferralCode"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("referralCode", a.Configuration.APIClient.ParameterToString(referralCode, ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("referralCode", a.Configuration.APIClient.ParameterToString(referralCode, ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new(float64)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new(float64)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Confirm your email address with a token.
  *
- * @param token 
+ * @param token
  * @return *AccessToken
  */
 func (a UserApi) UserConfirm(token string) (*AccessToken, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/confirmEmail"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/confirmEmail"
 
-    // verify the required parameter 'token' is set
-    if &token == nil {
-        return new(AccessToken), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserConfirm")
-    }
+	// verify the required parameter 'token' is set
+	if &token == nil {
+		return new(AccessToken), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserConfirm")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["token"] = token
-    var successPayload = new(AccessToken)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["token"] = token
+	var successPayload = new(AccessToken)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -240,121 +240,121 @@ func (a UserApi) UserConfirm(token string) (*AccessToken, *APIResponse, error) {
  */
 func (a UserApi) UserConfirmEnableTFA(token string, type_ string) (*bool, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/confirmEnableTFA"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/confirmEnableTFA"
 
-    // verify the required parameter 'token' is set
-    if &token == nil {
-        return new(bool), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserConfirmEnableTFA")
-    }
+	// verify the required parameter 'token' is set
+	if &token == nil {
+		return new(bool), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserConfirmEnableTFA")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["type_"] = type_
-    formParams["token"] = token
-    var successPayload = new(bool)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["type_"] = type_
+	formParams["token"] = token
+	var successPayload = new(bool)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Confirm a withdrawal.
  *
- * @param token 
+ * @param token
  * @return *Transaction
  */
 func (a UserApi) UserConfirmWithdrawal(token string) (*Transaction, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/confirmWithdrawal"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/confirmWithdrawal"
 
-    // verify the required parameter 'token' is set
-    if &token == nil {
-        return new(Transaction), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserConfirmWithdrawal")
-    }
+	// verify the required parameter 'token' is set
+	if &token == nil {
+		return new(Transaction), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserConfirmWithdrawal")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["token"] = token
-    var successPayload = new(Transaction)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["token"] = token
+	var successPayload = new(Transaction)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -366,59 +366,59 @@ func (a UserApi) UserConfirmWithdrawal(token string) (*Transaction, *APIResponse
  */
 func (a UserApi) UserDisableTFA(token string, type_ string) (*bool, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/disableTFA"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/disableTFA"
 
-    // verify the required parameter 'token' is set
-    if &token == nil {
-        return new(bool), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserDisableTFA")
-    }
+	// verify the required parameter 'token' is set
+	if &token == nil {
+		return new(bool), nil, errors.New("Missing required parameter 'token' when calling UserApi->UserDisableTFA")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["type_"] = type_
-    formParams["token"] = token
-    var successPayload = new(bool)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["type_"] = type_
+	formParams["token"] = token
+	var successPayload = new(bool)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -428,51 +428,51 @@ func (a UserApi) UserDisableTFA(token string, type_ string) (*bool, *APIResponse
  */
 func (a UserApi) UserGet() (*User, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new(User)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new(User)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -482,51 +482,51 @@ func (a UserApi) UserGet() (*User, *APIResponse, error) {
  */
 func (a UserApi) UserGetAffiliateStatus() ([]Affiliate, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/affiliateStatus"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/affiliateStatus"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new([]Affiliate)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new([]Affiliate)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -536,333 +536,333 @@ func (a UserApi) UserGetAffiliateStatus() ([]Affiliate, *APIResponse, error) {
  */
 func (a UserApi) UserGetCommission() ([]UserCommission, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/commission"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/commission"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new([]UserCommission)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new([]UserCommission)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Get a deposit address.
  *
- * @param currency 
+ * @param currency
  * @return *string
  */
 func (a UserApi) UserGetDepositAddress(currency string) (*string, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/depositAddress"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/depositAddress"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new(string)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new(string)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Get your account&#39;s margin status. Send a currency of \&quot;all\&quot; to receive an array of all supported currencies.
  *
- * @param currency 
+ * @param currency
  * @return *Margin
  */
 func (a UserApi) UserGetMargin(currency string) (*Margin, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/margin"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/margin"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    SetApiHeader(headerParams, &a.Configuration, httpMethod, path, formParams, queryParams)
-    var successPayload = new(Margin)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	SetApiHeader(headerParams, &a.Configuration, httpMethod, path, formParams, queryParams)
+	var successPayload = new(Margin)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Get your current wallet information.
  *
- * @param currency 
+ * @param currency
  * @return *Wallet
  */
 func (a UserApi) UserGetWallet(currency string) (*Wallet, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/wallet"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/wallet"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    SetApiHeader(headerParams, &a.Configuration, httpMethod, path, formParams, queryParams)
-    var successPayload = new(Wallet)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	SetApiHeader(headerParams, &a.Configuration, httpMethod, path, formParams, queryParams)
+	var successPayload = new(Wallet)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Get a history of all of your wallet transactions (deposits, withdrawals, PNL).
  *
- * @param currency 
+ * @param currency
  * @return []Transaction
  */
 func (a UserApi) UserGetWalletHistory(currency string) ([]Transaction, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/walletHistory"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/walletHistory"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new([]Transaction)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new([]Transaction)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Get a summary of all of your wallet transactions (deposits, withdrawals, PNL).
  *
- * @param currency 
+ * @param currency
  * @return []Transaction
  */
 func (a UserApi) UserGetWalletSummary(currency string) ([]Transaction, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/walletSummary"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/walletSummary"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new([]Transaction)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new([]Transaction)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -872,51 +872,51 @@ func (a UserApi) UserGetWalletSummary(currency string) ([]Transaction, *APIRespo
  */
 func (a UserApi) UserLogout() (*APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/logout"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/logout"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return NewAPIResponse(httpResponse.RawResponse), err
-    }
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return NewAPIResponse(httpResponse.RawResponse), err
+	}
 
-    return NewAPIResponse(httpResponse.RawResponse), err
+	return NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -926,108 +926,108 @@ func (a UserApi) UserLogout() (*APIResponse, error) {
  */
 func (a UserApi) UserLogoutAll() (*float64, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/logoutAll"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/logoutAll"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new(float64)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new(float64)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Get the minimum withdrawal fee for a currency.
  * This is changed based on network conditions to ensure timely withdrawals. During network congestion, this may be high. The fee is returned in the same currency.
  *
- * @param currency 
+ * @param currency
  * @return *float64
  */
 func (a UserApi) UserMinWithdrawalFee(currency string) (*float64, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/minWithdrawalFee"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/minWithdrawalFee"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("currency", a.Configuration.APIClient.ParameterToString(currency, ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new(float64)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new(float64)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -1039,53 +1039,53 @@ func (a UserApi) UserMinWithdrawalFee(currency string) (*float64, *APIResponse, 
  */
 func (a UserApi) UserRequestEnableTFA(type_ string) (*bool, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/requestEnableTFA"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/requestEnableTFA"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["type_"] = type_
-    var successPayload = new(bool)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["type_"] = type_
+	var successPayload = new(bool)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -1101,144 +1101,144 @@ func (a UserApi) UserRequestEnableTFA(type_ string) (*bool, *APIResponse, error)
  */
 func (a UserApi) UserRequestWithdrawal(currency string, amount float32, address string, otpToken string, fee float64) (*Transaction, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/requestWithdrawal"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/requestWithdrawal"
 
-    // verify the required parameter 'currency' is set
-    if &currency == nil {
-        return new(Transaction), nil, errors.New("Missing required parameter 'currency' when calling UserApi->UserRequestWithdrawal")
-    }
-    // verify the required parameter 'amount' is set
-    if &amount == nil {
-        return new(Transaction), nil, errors.New("Missing required parameter 'amount' when calling UserApi->UserRequestWithdrawal")
-    }
-    // verify the required parameter 'address' is set
-    if &address == nil {
-        return new(Transaction), nil, errors.New("Missing required parameter 'address' when calling UserApi->UserRequestWithdrawal")
-    }
+	// verify the required parameter 'currency' is set
+	if &currency == nil {
+		return new(Transaction), nil, errors.New("Missing required parameter 'currency' when calling UserApi->UserRequestWithdrawal")
+	}
+	// verify the required parameter 'amount' is set
+	if &amount == nil {
+		return new(Transaction), nil, errors.New("Missing required parameter 'amount' when calling UserApi->UserRequestWithdrawal")
+	}
+	// verify the required parameter 'address' is set
+	if &address == nil {
+		return new(Transaction), nil, errors.New("Missing required parameter 'address' when calling UserApi->UserRequestWithdrawal")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["otpToken"] = otpToken
-    formParams["currency"] = currency
-    formParams["amount"] = fmt.Sprintf("%.8f", amount)
-    formParams["address"] = address
-    formParams["fee"] = fmt.Sprintf("%.8f", fee)
-    var successPayload = new(Transaction)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["otpToken"] = otpToken
+	formParams["currency"] = currency
+	formParams["amount"] = fmt.Sprintf("%.8f", amount)
+	formParams["address"] = address
+	formParams["fee"] = fmt.Sprintf("%.8f", fee)
+	var successPayload = new(Transaction)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Save user preferences.
  *
- * @param prefs 
+ * @param prefs
  * @param overwrite If true, will overwrite all existing preferences.
  * @return *User
  */
 func (a UserApi) UserSavePreferences(prefs string, overwrite bool) (*User, *APIResponse, error) {
 
-    var httpMethod = "Post"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user/preferences"
+	var httpMethod = "Post"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user/preferences"
 
-    // verify the required parameter 'prefs' is set
-    if &prefs == nil {
-        return new(User), nil, errors.New("Missing required parameter 'prefs' when calling UserApi->UserSavePreferences")
-    }
+	// verify the required parameter 'prefs' is set
+	if &prefs == nil {
+		return new(User), nil, errors.New("Missing required parameter 'prefs' when calling UserApi->UserSavePreferences")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["prefs"] = prefs
-    formParams["overwrite"] = strconv.FormatBool(overwrite)
-    var successPayload = new(User)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["prefs"] = prefs
+	formParams["overwrite"] = strconv.FormatBool(overwrite)
+	var successPayload = new(User)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
  * Update your password, name, and other attributes.
  *
- * @param firstname 
- * @param lastname 
- * @param oldPassword 
- * @param newPassword 
- * @param newPasswordConfirm 
+ * @param firstname
+ * @param lastname
+ * @param oldPassword
+ * @param newPassword
+ * @param newPasswordConfirm
  * @param username Username can only be set once. To reset, email support.
  * @param country Country of residence.
  * @param pgpPubKey PGP Public Key. If specified, automated emails will be sentwith this key.
@@ -1246,58 +1246,58 @@ func (a UserApi) UserSavePreferences(prefs string, overwrite bool) (*User, *APIR
  */
 func (a UserApi) UserUpdate(firstname string, lastname string, oldPassword string, newPassword string, newPasswordConfirm string, username string, country string, pgpPubKey string) (*User, *APIResponse, error) {
 
-    var httpMethod = "Put"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/user"
+	var httpMethod = "Put"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/user"
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
 
-    formParams["firstname"] = firstname
-    formParams["lastname"] = lastname
-    formParams["oldPassword"] = oldPassword
-    formParams["newPassword"] = newPassword
-    formParams["newPasswordConfirm"] = newPasswordConfirm
-    formParams["username"] = username
-    formParams["country"] = country
-    formParams["pgpPubKey"] = pgpPubKey
-    var successPayload = new(User)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	formParams["firstname"] = firstname
+	formParams["lastname"] = lastname
+	formParams["oldPassword"] = oldPassword
+	formParams["newPassword"] = newPassword
+	formParams["newPasswordConfirm"] = newPasswordConfirm
+	formParams["username"] = username
+	formParams["country"] = country
+	formParams["pgpPubKey"] = pgpPubKey
+	var successPayload = new(User)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }

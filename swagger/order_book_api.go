@@ -1,7 +1,7 @@
-/* 
+/*
  * BitMEX API
  *
- * ## REST API for the BitMEX Trading Platform  [Changelog](/app/apiChangelog)    #### Getting Started   ##### Fetching Data  All REST endpoints are documented below. You can try out any query right from this interface.  Most table queries accept `count`, `start`, and `reverse` params. Set `reverse=true` to get rows newest-first.  Additional documentation regarding filters, timestamps, and authentication is available in [the main API documentation](https://www.bitmex.com/app/restAPI).  *All* table data is available via the [Websocket](/app/wsAPI). We highly recommend using the socket if you want to have the quickest possible data without being subject to ratelimits.  ##### Return Types  By default, all data is returned as JSON. Send `?_format=csv` to get CSV data or `?_format=xml` to get XML data.  ##### Trade Data Queries  *This is only a small subset of what is available, to get you started.*  Fill in the parameters and click the `Try it out!` button to try any of these queries.  * [Pricing Data](#!/Quote/Quote_get)  * [Trade Data](#!/Trade/Trade_get)  * [OrderBook Data](#!/OrderBook/OrderBook_getL2)  * [Settlement Data](#!/Settlement/Settlement_get)  * [Exchange Statistics](#!/Stats/Stats_history)  Every function of the BitMEX.com platform is exposed here and documented. Many more functions are available.  -  ## All API Endpoints  Click to expand a section. 
+ * ## REST API for the BitMEX Trading Platform  [Changelog](/app/apiChangelog)    #### Getting Started   ##### Fetching Data  All REST endpoints are documented below. You can try out any query right from this interface.  Most table queries accept `count`, `start`, and `reverse` params. Set `reverse=true` to get rows newest-first.  Additional documentation regarding filters, timestamps, and authentication is available in [the main API documentation](https://www.bitmex.com/app/restAPI).  *All* table data is available via the [Websocket](/app/wsAPI). We highly recommend using the socket if you want to have the quickest possible data without being subject to ratelimits.  ##### Return Types  By default, all data is returned as JSON. Send `?_format=csv` to get CSV data or `?_format=xml` to get XML data.  ##### Trade Data Queries  *This is only a small subset of what is available, to get you started.*  Fill in the parameters and click the `Try it out!` button to try any of these queries.  * [Pricing Data](#!/Quote/Quote_get)  * [Trade Data](#!/Trade/Trade_get)  * [OrderBook Data](#!/OrderBook/OrderBook_getL2)  * [Settlement Data](#!/Settlement/Settlement_get)  * [Exchange Statistics](#!/Stats/Stats_history)  Every function of the BitMEX.com platform is exposed here and documented. Many more functions are available.  -  ## All API Endpoints  Click to expand a section.
  *
  * OpenAPI spec version: 1.2.0
  * Contact: support@bitmex.com
@@ -23,30 +23,30 @@
 package swagger
 
 import (
-    "errors"
-    "net/url"
-    "encoding/json"
-    "fmt"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"net/url"
 )
 
 type OrderBookApi struct {
-    Configuration Configuration
+	Configuration Configuration
 }
 
 func NewOrderBookApi() *OrderBookApi {
-    configuration := NewConfiguration()
-    return &OrderBookApi{
-        Configuration: *configuration,
-    }
+	configuration := NewConfiguration()
+	return &OrderBookApi{
+		Configuration: *configuration,
+	}
 }
 
 func NewOrderBookApiWithBasePath(basePath string) *OrderBookApi {
-    configuration := NewConfiguration()
-    configuration.BasePath = basePath
+	configuration := NewConfiguration()
+	configuration.BasePath = basePath
 
-    return &OrderBookApi{
-        Configuration: *configuration,
-    }
+	return &OrderBookApi{
+		Configuration: *configuration,
+	}
 }
 
 /**
@@ -58,58 +58,58 @@ func NewOrderBookApiWithBasePath(basePath string) *OrderBookApi {
  */
 func (a OrderBookApi) OrderBookGet(symbol string, depth float32) ([]OrderBook, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/orderBook"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/orderBook"
 
-    // verify the required parameter 'symbol' is set
-    if &symbol == nil {
-        return *new([]OrderBook), nil, errors.New("Missing required parameter 'symbol' when calling OrderBookApi->OrderBookGet")
-    }
+	// verify the required parameter 'symbol' is set
+	if &symbol == nil {
+		return *new([]OrderBook), nil, errors.New("Missing required parameter 'symbol' when calling OrderBookApi->OrderBookGet")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("symbol", a.Configuration.APIClient.ParameterToString(symbol, ""))
-    queryParams.Add("depth", a.Configuration.APIClient.ParameterToString(depth, ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("symbol", a.Configuration.APIClient.ParameterToString(symbol, ""))
+	queryParams.Add("depth", a.Configuration.APIClient.ParameterToString(depth, ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new([]OrderBook)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new([]OrderBook)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }
 
 /**
@@ -121,56 +121,56 @@ func (a OrderBookApi) OrderBookGet(symbol string, depth float32) ([]OrderBook, *
  */
 func (a OrderBookApi) OrderBookGetL2(symbol string, depth float32) ([]OrderBookL2, *APIResponse, error) {
 
-    var httpMethod = "Get"
-    // create path and map variables
-    path := a.Configuration.BasePath + "/orderBook/L2"
+	var httpMethod = "Get"
+	// create path and map variables
+	path := a.Configuration.BasePath + "/orderBook/L2"
 
-    // verify the required parameter 'symbol' is set
-    if &symbol == nil {
-        return *new([]OrderBookL2), nil, errors.New("Missing required parameter 'symbol' when calling OrderBookApi->OrderBookGetL2")
-    }
+	// verify the required parameter 'symbol' is set
+	if &symbol == nil {
+		return *new([]OrderBookL2), nil, errors.New("Missing required parameter 'symbol' when calling OrderBookApi->OrderBookGetL2")
+	}
 
-    headerParams := make(map[string]string)
-    queryParams := url.Values{}
-    formParams := make(map[string]string)
-    var postBody interface{}
-    var fileName string
-    var fileBytes []byte
+	headerParams := make(map[string]string)
+	queryParams := url.Values{}
+	formParams := make(map[string]string)
+	var postBody interface{}
+	var fileName string
+	var fileBytes []byte
 
-    // add default headers if any
-    for key := range a.Configuration.DefaultHeader {
-        headerParams[key] = a.Configuration.DefaultHeader[key]
-    }
-    queryParams.Add("symbol", a.Configuration.APIClient.ParameterToString(symbol, ""))
-    queryParams.Add("depth", a.Configuration.APIClient.ParameterToString(fmt.Sprintf("%.0f", depth), ""))
+	// add default headers if any
+	for key := range a.Configuration.DefaultHeader {
+		headerParams[key] = a.Configuration.DefaultHeader[key]
+	}
+	queryParams.Add("symbol", a.Configuration.APIClient.ParameterToString(symbol, ""))
+	queryParams.Add("depth", a.Configuration.APIClient.ParameterToString(fmt.Sprintf("%.0f", depth), ""))
 
-    // to determine the Content-Type header
-    localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded",}
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{"application/json", "application/x-www-form-urlencoded"}
 
-    // set Content-Type header
-    localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
-    if localVarHttpContentType != "" {
-        headerParams["Content-Type"] = localVarHttpContentType
-    }
-    // to determine the Accept header
-    localVarHttpHeaderAccepts := []string{
-        "application/json",
-        "application/xml",
-        "text/xml",
-        "application/javascript",
-        "text/javascript",
-    }
+	// set Content-Type header
+	localVarHttpContentType := a.Configuration.APIClient.SelectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		headerParams["Content-Type"] = localVarHttpContentType
+	}
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+	}
 
-    // set Accept header
-    localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
-    if localVarHttpHeaderAccept != "" {
-        headerParams["Accept"] = localVarHttpHeaderAccept
-    }
-    var successPayload = new([]OrderBookL2)
-    httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
-    if err != nil {
-        return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
-    }
-    err = json.Unmarshal(httpResponse.Body(), &successPayload)
-    return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	// set Accept header
+	localVarHttpHeaderAccept := a.Configuration.APIClient.SelectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		headerParams["Accept"] = localVarHttpHeaderAccept
+	}
+	var successPayload = new([]OrderBookL2)
+	httpResponse, err := a.Configuration.APIClient.CallAPI(path, httpMethod, postBody, headerParams, queryParams, formParams, fileName, fileBytes)
+	if err != nil {
+		return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
+	}
+	err = json.Unmarshal(httpResponse.Body(), &successPayload)
+	return *successPayload, NewAPIResponse(httpResponse.RawResponse), err
 }

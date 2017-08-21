@@ -1,7 +1,7 @@
-/* 
+/*
  * BitMEX API
  *
- * ## REST API for the BitMEX Trading Platform  [Changelog](/app/apiChangelog)    #### Getting Started   ##### Fetching Data  All REST endpoints are documented below. You can try out any query right from this interface.  Most table queries accept `count`, `start`, and `reverse` params. Set `reverse=true` to get rows newest-first.  Additional documentation regarding filters, timestamps, and authentication is available in [the main API documentation](https://www.bitmex.com/app/restAPI).  *All* table data is available via the [Websocket](/app/wsAPI). We highly recommend using the socket if you want to have the quickest possible data without being subject to ratelimits.  ##### Return Types  By default, all data is returned as JSON. Send `?_format=csv` to get CSV data or `?_format=xml` to get XML data.  ##### Trade Data Queries  *This is only a small subset of what is available, to get you started.*  Fill in the parameters and click the `Try it out!` button to try any of these queries.  * [Pricing Data](#!/Quote/Quote_get)  * [Trade Data](#!/Trade/Trade_get)  * [OrderBook Data](#!/OrderBook/OrderBook_getL2)  * [Settlement Data](#!/Settlement/Settlement_get)  * [Exchange Statistics](#!/Stats/Stats_history)  Every function of the BitMEX.com platform is exposed here and documented. Many more functions are available.  -  ## All API Endpoints  Click to expand a section. 
+ * ## REST API for the BitMEX Trading Platform  [Changelog](/app/apiChangelog)    #### Getting Started   ##### Fetching Data  All REST endpoints are documented below. You can try out any query right from this interface.  Most table queries accept `count`, `start`, and `reverse` params. Set `reverse=true` to get rows newest-first.  Additional documentation regarding filters, timestamps, and authentication is available in [the main API documentation](https://www.bitmex.com/app/restAPI).  *All* table data is available via the [Websocket](/app/wsAPI). We highly recommend using the socket if you want to have the quickest possible data without being subject to ratelimits.  ##### Return Types  By default, all data is returned as JSON. Send `?_format=csv` to get CSV data or `?_format=xml` to get XML data.  ##### Trade Data Queries  *This is only a small subset of what is available, to get you started.*  Fill in the parameters and click the `Try it out!` button to try any of these queries.  * [Pricing Data](#!/Quote/Quote_get)  * [Trade Data](#!/Trade/Trade_get)  * [OrderBook Data](#!/OrderBook/OrderBook_getL2)  * [Settlement Data](#!/Settlement/Settlement_get)  * [Exchange Statistics](#!/Stats/Stats_history)  Every function of the BitMEX.com platform is exposed here and documented. Many more functions are available.  -  ## All API Endpoints  Click to expand a section.
  *
  * OpenAPI spec version: 1.2.0
  * Contact: support@bitmex.com
@@ -23,53 +23,53 @@
 package swagger
 
 import (
-    "time"
+	"time"
 )
 
 type UserPreferences struct {
-    AnimationsEnabled bool `json:"animationsEnabled,omitempty"`
+	AnimationsEnabled bool `json:"animationsEnabled,omitempty"`
 
-    AnnouncementsLastSeen time.Time `json:"announcementsLastSeen,omitempty"`
+	AnnouncementsLastSeen time.Time `json:"announcementsLastSeen,omitempty"`
 
-    ChatChannelID float64 `json:"chatChannelID,omitempty"`
+	ChatChannelID float64 `json:"chatChannelID,omitempty"`
 
-    ColorTheme string `json:"colorTheme,omitempty"`
+	ColorTheme string `json:"colorTheme,omitempty"`
 
-    Currency string `json:"currency,omitempty"`
+	Currency string `json:"currency,omitempty"`
 
-    Debug bool `json:"debug,omitempty"`
+	Debug bool `json:"debug,omitempty"`
 
-    DisableEmails []string `json:"disableEmails,omitempty"`
+	DisableEmails []string `json:"disableEmails,omitempty"`
 
-    HideConfirmDialogs []string `json:"hideConfirmDialogs,omitempty"`
+	HideConfirmDialogs []string `json:"hideConfirmDialogs,omitempty"`
 
-    HideConnectionModal bool `json:"hideConnectionModal,omitempty"`
+	HideConnectionModal bool `json:"hideConnectionModal,omitempty"`
 
-    HideFromLeaderboard bool `json:"hideFromLeaderboard,omitempty"`
+	HideFromLeaderboard bool `json:"hideFromLeaderboard,omitempty"`
 
-    HideNameFromLeaderboard bool `json:"hideNameFromLeaderboard,omitempty"`
+	HideNameFromLeaderboard bool `json:"hideNameFromLeaderboard,omitempty"`
 
-    HideNotifications []string `json:"hideNotifications,omitempty"`
+	HideNotifications []string `json:"hideNotifications,omitempty"`
 
-    Locale string `json:"locale,omitempty"`
+	Locale string `json:"locale,omitempty"`
 
-    MsgsSeen []string `json:"msgsSeen,omitempty"`
+	MsgsSeen []string `json:"msgsSeen,omitempty"`
 
-    OrderBookBinning XAny `json:"orderBookBinning,omitempty"`
+	OrderBookBinning XAny `json:"orderBookBinning,omitempty"`
 
-    OrderBookType string `json:"orderBookType,omitempty"`
+	OrderBookType string `json:"orderBookType,omitempty"`
 
-    OrderControlsPlusMinus bool `json:"orderControlsPlusMinus,omitempty"`
+	OrderControlsPlusMinus bool `json:"orderControlsPlusMinus,omitempty"`
 
-    Sounds []string `json:"sounds,omitempty"`
+	Sounds []string `json:"sounds,omitempty"`
 
-    StrictIPCheck bool `json:"strictIPCheck,omitempty"`
+	StrictIPCheck bool `json:"strictIPCheck,omitempty"`
 
-    StrictTimeout bool `json:"strictTimeout,omitempty"`
+	StrictTimeout bool `json:"strictTimeout,omitempty"`
 
-    TickerGroup string `json:"tickerGroup,omitempty"`
+	TickerGroup string `json:"tickerGroup,omitempty"`
 
-    TickerPinned bool `json:"tickerPinned,omitempty"`
+	TickerPinned bool `json:"tickerPinned,omitempty"`
 
-    TradeLayout string `json:"tradeLayout,omitempty"`
+	TradeLayout string `json:"tradeLayout,omitempty"`
 }
