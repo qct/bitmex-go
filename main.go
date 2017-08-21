@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/qct/bitmex-go/swagger"
-	. "github.com/qct/bitmex-go/swagger"
+	. "github.com/qct/bitmex-go/restful"
 )
 
 var (
