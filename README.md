@@ -10,3 +10,9 @@ all structs and APIs are from the bitmex official api connectors, based on that,
 
 ## next
 I only tested some API I will use, in the near future, I will keep adding and fixing to make more API available.
+
+## installation
+`go get github.com/qct/bitmex-go`
+
+## how to use
+what? need I tell you this? Look at `main.go`
