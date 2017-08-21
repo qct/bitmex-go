@@ -1,6 +1,6 @@
 # Golang SDK for [bitmex](https://www.bitmex.com)
 
-inspired by [https://github.com/BitMEX/api-connectors](https://github.com/BitMEX/api-connectors), [https://www.bitmex.com/api/explorer](https://www.bitmex.com/api/explorer) and [github.com/jxc6698/bitcoin-exchange-api](github.com/jxc6698/bitcoin-exchange-api)
+inspired by [https://github.com/BitMEX/api-connectors](https://github.com/BitMEX/api-connectors), [https://www.bitmex.com/api/explorer](https://www.bitmex.com/api/explorer) and [https://github.com/jxc6698/bitcoin-exchange-api](https://github.com/jxc6698/bitcoin-exchange-api)
 
 ## why
 the generated connectors by bitmex have too many mistakes to use, this SDK fix these bugs to ensure bitmex API can get right results.
