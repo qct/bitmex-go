@@ -24,12 +24,6 @@ func main() {
 func testChat() {
 	log.Println("-----------test chat------------")
 	chatApi := swagger.NewChatApiWithConfig(config)
-	/*channels, response, err := chatApi.ChatGetChannels()
-	  if err != nil {
-	      log.Println("error: ", err)
-	  }
-	  log.Println(response.Status)
-	  log.Println(channels)*/
 	chat, response, err := chatApi.ChatNew("hello", 2)
 	if err != nil {
 		log.Println("error: ", err)
