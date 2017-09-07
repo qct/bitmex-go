@@ -27,6 +27,11 @@ func NewOrderBookApi() *OrderBookApi {
 	return &OrderBookApi{swaggerOrderBookApi: &swaggerOrderBookApi}
 }
 
+func NewOrderBookApiWithConfig(config *swagger.Configuration) *OrderBookApi {
+	swaggerOrderBookApi := swagger.OrderBookApi{Configuration: *config}
+	return &OrderBookApi{swaggerOrderBookApi: &swaggerOrderBookApi}
+}
+
 func NewOrderBookApiWithBasePath(basePath string) *OrderBookApi {
 	configuration := swagger.NewConfiguration()
 	configuration.BasePath = basePath
