@@ -40,17 +40,17 @@ func NewOrderBookApiWithBasePath(basePath string) *OrderBookApi {
 	return &OrderBookApi{swaggerOrderBookApi: &swaggerOrderBookApi}
 }
 
-func (a OrderBookApi) OrderBookGetL2(symbol string, depth float32) (*OrderBooks, error) {
+func (a OrderBookApi) OrderBookGetL2(symbol string, depth float32) (OrderBooks, error) {
 	rawOrderBooks, response, err := a.swaggerOrderBookApi.OrderBookGetL2(symbol, depth)
+    orderBooks := OrderBooks{}
 	if err != nil {
 		log.Println("error wihle getting orderbook: ", err)
-		return nil, err
+		return orderBooks, err
 	}
 	if response.StatusCode != 200 {
 		log.Println("response code incorrect, expect 200, but ", response.StatusCode)
-		return nil, err
+		return orderBooks, err
 	}
-	orderBooks := new(OrderBooks)
 	for _, v := range rawOrderBooks {
 		if v.Side == SIDE_BUY {
 			orderBooks.BidList = append(orderBooks.BidList, v)
