@@ -71,9 +71,7 @@ func testPosition() {
 		log.Println("error: ", err)
 	}
 	log.Println(response.Status)
-	if len(positions)>1 {
-		log.Println(positions[0])
-	}
+	log.Println(positions[0])
 }
 
 func testOrderBook() {
