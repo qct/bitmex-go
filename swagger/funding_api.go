@@ -15,6 +15,7 @@ import (
 	"net/http"
 	"strings"
 	"golang.org/x/net/context"
+	"time"
 	"encoding/json"
 )
 
@@ -23,113 +24,85 @@ var (
 	_ context.Context
 )
 
-type OrderBookApiService service
+type FundingApiService service
 
 
-/* OrderBookApiService Get current orderbook [deprecated, use /orderBook/L2].
+/* FundingApiService Get funding history.
 
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth.
- @return []OrderBook*/
-func (a *OrderBookApiService) OrderBookGet(symbol string, localVarOptionals map[string]interface{}) ([]OrderBook,  *http.Response, error) {
+     @param "symbol" (string) Instrument symbol. Send a bare series (e.g. XBU) to get data for the nearest expiring contract in that series.  You can also send a timeframe, e.g. &#x60;XBU:monthly&#x60;. Timeframes are &#x60;daily&#x60;, &#x60;weekly&#x60;, &#x60;monthly&#x60;, &#x60;quarterly&#x60;, and &#x60;biquarterly&#x60;.
+     @param "filter" (string) Generic table filter. Send JSON key/value pairs, such as &#x60;{\&quot;key\&quot;: \&quot;value\&quot;}&#x60;. You can key on individual fields, and do more advanced querying on timestamps. See the [Timestamp Docs](https://www.bitmex.com/app/restAPI#timestamp-filters) for more details.
+     @param "columns" (string) Array of column names to fetch. If omitted, will return all columns.  Note that this method will always return item keys, even when not specified, so you may receive more columns that you expect.
+     @param "count" (float32) Number of results to fetch.
+     @param "start" (float32) Starting point for results.
+     @param "reverse" (bool) If true, will sort results newest first.
+     @param "startTime" (time.Time) Starting date filter for results.
+     @param "endTime" (time.Time) Ending date filter for results.
+ @return []Funding*/
+func (a *FundingApiService) FundingGet(localVarOptionals map[string]interface{}) ([]Funding,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  []OrderBook
+	 	successPayload  []Funding
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook"
+	localVarPath := a.client.cfg.BasePath + "/funding"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
+	if err := typeCheckParameter(localVarOptionals["symbol"], "string", "symbol"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["filter"], "string", "filter"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["columns"], "string", "columns"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["count"], "float32", "count"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["start"], "float32", "start"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["reverse"], "bool", "reverse"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["startTime"], "time.Time", "startTime"); err != nil {
+		return successPayload, nil, err
+	}
+	if err := typeCheckParameter(localVarOptionals["endTime"], "time.Time", "endTime"); err != nil {
 		return successPayload, nil, err
 	}
 
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
+	if localVarTempParam, localVarOk := localVarOptionals["symbol"].(string); localVarOk {
+		localVarQueryParams.Add("symbol", parameterToString(localVarTempParam, ""))
 	}
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	if localVarTempParam, localVarOk := localVarOptionals["filter"].(string); localVarOk {
+		localVarQueryParams.Add("filter", parameterToString(localVarTempParam, ""))
 	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-		"application/xml",
-		"text/xml",
-		"application/javascript",
-		"text/javascript",
-		}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	if localVarTempParam, localVarOk := localVarOptionals["columns"].(string); localVarOk {
+		localVarQueryParams.Add("columns", parameterToString(localVarTempParam, ""))
 	}
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return successPayload, nil, err
+	if localVarTempParam, localVarOk := localVarOptionals["count"].(float32); localVarOk {
+		localVarQueryParams.Add("count", parameterToString(localVarTempParam, ""))
 	}
-
-	 localVarHttpResponse, err := a.client.callAPI(r)
-	 if err != nil || localVarHttpResponse == nil {
-		  return successPayload, localVarHttpResponse, err
-	 }
-	 defer localVarHttpResponse.Body.Close()
-	 if localVarHttpResponse.StatusCode >= 300 {
-		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
-	 }
-	
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-	 	return successPayload, localVarHttpResponse, err
+	if localVarTempParam, localVarOk := localVarOptionals["start"].(float32); localVarOk {
+		localVarQueryParams.Add("start", parameterToString(localVarTempParam, ""))
 	}
-
-
-	return successPayload, localVarHttpResponse, err
-}
-
-/* OrderBookApiService Get current orderbook in vertical format.
-
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth per side. Send 0 for full depth.
- @return []OrderBookL2*/
-func (a *OrderBookApiService) OrderBookGetL2(symbol string, localVarOptionals map[string]interface{}) ([]OrderBookL2,  *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []OrderBookL2
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook/L2"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
-		return successPayload, nil, err
+	if localVarTempParam, localVarOk := localVarOptionals["reverse"].(bool); localVarOk {
+		localVarQueryParams.Add("reverse", parameterToString(localVarTempParam, ""))
 	}
-
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
+	if localVarTempParam, localVarOk := localVarOptionals["startTime"].(time.Time); localVarOk {
+		localVarQueryParams.Add("startTime", parameterToString(localVarTempParam, ""))
+	}
+	if localVarTempParam, localVarOk := localVarOptionals["endTime"].(time.Time); localVarOk {
+		localVarQueryParams.Add("endTime", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }

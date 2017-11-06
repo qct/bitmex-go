@@ -14,55 +14,16 @@ import (
 	"time"
 )
 
-type Wallet struct {
+// Swap Funding History
+type Funding struct {
 
-	Account float32 `json:"account"`
+	Timestamp time.Time `json:"timestamp"`
 
-	Currency string `json:"currency"`
+	Symbol string `json:"symbol"`
 
-	PrevDeposited float32 `json:"prevDeposited,omitempty"`
+	FundingInterval time.Time `json:"fundingInterval,omitempty"`
 
-	PrevWithdrawn float32 `json:"prevWithdrawn,omitempty"`
+	FundingRate float64 `json:"fundingRate,omitempty"`
 
-	PrevTransferIn float32 `json:"prevTransferIn,omitempty"`
-
-	PrevTransferOut float32 `json:"prevTransferOut,omitempty"`
-
-	PrevAmount float32 `json:"prevAmount,omitempty"`
-
-	PrevTimestamp time.Time `json:"prevTimestamp,omitempty"`
-
-	DeltaDeposited float32 `json:"deltaDeposited,omitempty"`
-
-	DeltaWithdrawn float32 `json:"deltaWithdrawn,omitempty"`
-
-	DeltaTransferIn float32 `json:"deltaTransferIn,omitempty"`
-
-	DeltaTransferOut float32 `json:"deltaTransferOut,omitempty"`
-
-	DeltaAmount float32 `json:"deltaAmount,omitempty"`
-
-	Deposited float32 `json:"deposited,omitempty"`
-
-	Withdrawn float32 `json:"withdrawn,omitempty"`
-
-	TransferIn float32 `json:"transferIn,omitempty"`
-
-	TransferOut float32 `json:"transferOut,omitempty"`
-
-	Amount float32 `json:"amount,omitempty"`
-
-	PendingCredit float32 `json:"pendingCredit,omitempty"`
-
-	PendingDebit float32 `json:"pendingDebit,omitempty"`
-
-	ConfirmedDebit float32 `json:"confirmedDebit,omitempty"`
-
-	Timestamp time.Time `json:"timestamp,omitempty"`
-
-	Addr string `json:"addr,omitempty"`
-
-	Script string `json:"script,omitempty"`
-
-	WithdrawalLock []string `json:"withdrawalLock,omitempty"`
+	FundingRateDaily float64 `json:"fundingRateDaily,omitempty"`
 }

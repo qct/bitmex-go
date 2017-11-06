@@ -14,10 +14,12 @@ import (
 	"time"
 )
 
-// Placement, Cancellation, Amending, and History
-type Order struct {
+// Raw Order and Balance Data
+type Execution struct {
 
-	OrderID string `json:"orderID"`
+	ExecID string `json:"execID"`
+
+	OrderID string `json:"orderID,omitempty"`
 
 	ClOrdID string `json:"clOrdID,omitempty"`
 
@@ -28,6 +30,16 @@ type Order struct {
 	Symbol string `json:"symbol,omitempty"`
 
 	Side string `json:"side,omitempty"`
+
+	LastQty float32 `json:"lastQty,omitempty"`
+
+	LastPx float64 `json:"lastPx,omitempty"`
+
+	UnderlyingLastPx float64 `json:"underlyingLastPx,omitempty"`
+
+	LastMkt string `json:"lastMkt,omitempty"`
+
+	LastLiquidityInd string `json:"lastLiquidityInd,omitempty"`
 
 	SimpleOrderQty float64 `json:"simpleOrderQty,omitempty"`
 
@@ -46,6 +58,8 @@ type Order struct {
 	Currency string `json:"currency,omitempty"`
 
 	SettlCurrency string `json:"settlCurrency,omitempty"`
+
+	ExecType string `json:"execType,omitempty"`
 
 	OrdType string `json:"ordType,omitempty"`
 
@@ -75,9 +89,23 @@ type Order struct {
 
 	AvgPx float64 `json:"avgPx,omitempty"`
 
+	Commission float64 `json:"commission,omitempty"`
+
+	TradePublishIndicator string `json:"tradePublishIndicator,omitempty"`
+
 	MultiLegReportingType string `json:"multiLegReportingType,omitempty"`
 
 	Text string `json:"text,omitempty"`
+
+	TrdMatchID string `json:"trdMatchID,omitempty"`
+
+	ExecCost float32 `json:"execCost,omitempty"`
+
+	ExecComm float32 `json:"execComm,omitempty"`
+
+	HomeNotional float64 `json:"homeNotional,omitempty"`
+
+	ForeignNotional float64 `json:"foreignNotional,omitempty"`
 
 	TransactTime time.Time `json:"transactTime,omitempty"`
 

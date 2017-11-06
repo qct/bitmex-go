@@ -23,39 +23,29 @@ var (
 	_ context.Context
 )
 
-type OrderBookApiService service
+type StatsApiService service
 
 
-/* OrderBookApiService Get current orderbook [deprecated, use /orderBook/L2].
+/* StatsApiService Get exchange-wide and per-series turnover and volume statistics.
 
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth.
- @return []OrderBook*/
-func (a *OrderBookApiService) OrderBookGet(symbol string, localVarOptionals map[string]interface{}) ([]OrderBook,  *http.Response, error) {
+ @return []Stats*/
+func (a *StatsApiService) StatsGet() ([]Stats,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  []OrderBook
+	 	successPayload  []Stats
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook"
+	localVarPath := a.client.cfg.BasePath + "/stats"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
-		return successPayload, nil, err
-	}
 
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
 
@@ -101,36 +91,91 @@ func (a *OrderBookApiService) OrderBookGet(symbol string, localVarOptionals map[
 	return successPayload, localVarHttpResponse, err
 }
 
-/* OrderBookApiService Get current orderbook in vertical format.
+/* StatsApiService Get historical exchange-wide and per-series turnover and volume statistics.
 
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth per side. Send 0 for full depth.
- @return []OrderBookL2*/
-func (a *OrderBookApiService) OrderBookGetL2(symbol string, localVarOptionals map[string]interface{}) ([]OrderBookL2,  *http.Response, error) {
+ @return []StatsHistory*/
+func (a *StatsApiService) StatsHistory() ([]StatsHistory,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  []OrderBookL2
+	 	successPayload  []StatsHistory
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook/L2"
+	localVarPath := a.client.cfg.BasePath + "/stats/history"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
+
+	// to determine the Content-Type header
+	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
+
+	// set Content-Type header
+	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
+	if localVarHttpContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHttpContentType
+	}
+
+	// to determine the Accept header
+	localVarHttpHeaderAccepts := []string{
+		"application/json",
+		"application/xml",
+		"text/xml",
+		"application/javascript",
+		"text/javascript",
+		}
+
+	// set Accept header
+	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
+	if localVarHttpHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
+	}
+	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if err != nil {
 		return successPayload, nil, err
 	}
 
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
+	 localVarHttpResponse, err := a.client.callAPI(r)
+	 if err != nil || localVarHttpResponse == nil {
+		  return successPayload, localVarHttpResponse, err
+	 }
+	 defer localVarHttpResponse.Body.Close()
+	 if localVarHttpResponse.StatusCode >= 300 {
+		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
+	 }
+	
+	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
+	 	return successPayload, localVarHttpResponse, err
 	}
+
+
+	return successPayload, localVarHttpResponse, err
+}
+
+/* StatsApiService Get a summary of exchange statistics in USD.
+
+ @return []StatsUsd*/
+func (a *StatsApiService) StatsHistoryUSD() ([]StatsUsd,  *http.Response, error) {
+	var (
+		localVarHttpMethod = strings.ToUpper("Get")
+		localVarPostBody interface{}
+		localVarFileName string
+		localVarFileBytes []byte
+	 	successPayload  []StatsUsd
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/stats/historyUSD"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
 

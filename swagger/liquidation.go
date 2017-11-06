@@ -10,59 +10,16 @@
 
 package swagger
 
-import (
-	"time"
-)
+// Active Liquidations
+type Liquidation struct {
 
-type Wallet struct {
+	OrderID string `json:"orderID"`
 
-	Account float32 `json:"account"`
+	Symbol string `json:"symbol,omitempty"`
 
-	Currency string `json:"currency"`
+	Side string `json:"side,omitempty"`
 
-	PrevDeposited float32 `json:"prevDeposited,omitempty"`
+	Price float64 `json:"price,omitempty"`
 
-	PrevWithdrawn float32 `json:"prevWithdrawn,omitempty"`
-
-	PrevTransferIn float32 `json:"prevTransferIn,omitempty"`
-
-	PrevTransferOut float32 `json:"prevTransferOut,omitempty"`
-
-	PrevAmount float32 `json:"prevAmount,omitempty"`
-
-	PrevTimestamp time.Time `json:"prevTimestamp,omitempty"`
-
-	DeltaDeposited float32 `json:"deltaDeposited,omitempty"`
-
-	DeltaWithdrawn float32 `json:"deltaWithdrawn,omitempty"`
-
-	DeltaTransferIn float32 `json:"deltaTransferIn,omitempty"`
-
-	DeltaTransferOut float32 `json:"deltaTransferOut,omitempty"`
-
-	DeltaAmount float32 `json:"deltaAmount,omitempty"`
-
-	Deposited float32 `json:"deposited,omitempty"`
-
-	Withdrawn float32 `json:"withdrawn,omitempty"`
-
-	TransferIn float32 `json:"transferIn,omitempty"`
-
-	TransferOut float32 `json:"transferOut,omitempty"`
-
-	Amount float32 `json:"amount,omitempty"`
-
-	PendingCredit float32 `json:"pendingCredit,omitempty"`
-
-	PendingDebit float32 `json:"pendingDebit,omitempty"`
-
-	ConfirmedDebit float32 `json:"confirmedDebit,omitempty"`
-
-	Timestamp time.Time `json:"timestamp,omitempty"`
-
-	Addr string `json:"addr,omitempty"`
-
-	Script string `json:"script,omitempty"`
-
-	WithdrawalLock []string `json:"withdrawalLock,omitempty"`
+	LeavesQty float32 `json:"leavesQty,omitempty"`
 }

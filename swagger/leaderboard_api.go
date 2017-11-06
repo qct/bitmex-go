@@ -23,113 +23,36 @@ var (
 	_ context.Context
 )
 
-type OrderBookApiService service
+type LeaderboardApiService service
 
 
-/* OrderBookApiService Get current orderbook [deprecated, use /orderBook/L2].
+/* LeaderboardApiService Get current leaderboard.
 
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth.
- @return []OrderBook*/
-func (a *OrderBookApiService) OrderBookGet(symbol string, localVarOptionals map[string]interface{}) ([]OrderBook,  *http.Response, error) {
+     @param "method" (string) Ranking type. Options: \&quot;notional\&quot;, \&quot;ROE\&quot;
+ @return []Leaderboard*/
+func (a *LeaderboardApiService) LeaderboardGet(localVarOptionals map[string]interface{}) ([]Leaderboard,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  []OrderBook
+	 	successPayload  []Leaderboard
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook"
+	localVarPath := a.client.cfg.BasePath + "/leaderboard"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
+	if err := typeCheckParameter(localVarOptionals["method"], "string", "method"); err != nil {
 		return successPayload, nil, err
 	}
 
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
-	}
-	// to determine the Content-Type header
-	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
-
-	// set Content-Type header
-	localVarHttpContentType := selectHeaderContentType(localVarHttpContentTypes)
-	if localVarHttpContentType != "" {
-		localVarHeaderParams["Content-Type"] = localVarHttpContentType
-	}
-
-	// to determine the Accept header
-	localVarHttpHeaderAccepts := []string{
-		"application/json",
-		"application/xml",
-		"text/xml",
-		"application/javascript",
-		"text/javascript",
-		}
-
-	// set Accept header
-	localVarHttpHeaderAccept := selectHeaderAccept(localVarHttpHeaderAccepts)
-	if localVarHttpHeaderAccept != "" {
-		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
-	}
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-	if err != nil {
-		return successPayload, nil, err
-	}
-
-	 localVarHttpResponse, err := a.client.callAPI(r)
-	 if err != nil || localVarHttpResponse == nil {
-		  return successPayload, localVarHttpResponse, err
-	 }
-	 defer localVarHttpResponse.Body.Close()
-	 if localVarHttpResponse.StatusCode >= 300 {
-		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
-	 }
-	
-	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
-	 	return successPayload, localVarHttpResponse, err
-	}
-
-
-	return successPayload, localVarHttpResponse, err
-}
-
-/* OrderBookApiService Get current orderbook in vertical format.
-
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth per side. Send 0 for full depth.
- @return []OrderBookL2*/
-func (a *OrderBookApiService) OrderBookGetL2(symbol string, localVarOptionals map[string]interface{}) ([]OrderBookL2,  *http.Response, error) {
-	var (
-		localVarHttpMethod = strings.ToUpper("Get")
-		localVarPostBody interface{}
-		localVarFileName string
-		localVarFileBytes []byte
-	 	successPayload  []OrderBookL2
-	)
-
-	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook/L2"
-
-	localVarHeaderParams := make(map[string]string)
-	localVarQueryParams := url.Values{}
-	localVarFormParams := url.Values{}
-
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
-		return successPayload, nil, err
-	}
-
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
+	if localVarTempParam, localVarOk := localVarOptionals["method"].(string); localVarOk {
+		localVarQueryParams.Add("method", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }

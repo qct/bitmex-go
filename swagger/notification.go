@@ -14,55 +14,26 @@ import (
 	"time"
 )
 
-type Wallet struct {
+// Account Notifications
+type Notification struct {
 
-	Account float32 `json:"account"`
+	Id float32 `json:"id,omitempty"`
 
-	Currency string `json:"currency"`
+	Date time.Time `json:"date"`
 
-	PrevDeposited float32 `json:"prevDeposited,omitempty"`
+	Title string `json:"title"`
 
-	PrevWithdrawn float32 `json:"prevWithdrawn,omitempty"`
+	Body string `json:"body"`
 
-	PrevTransferIn float32 `json:"prevTransferIn,omitempty"`
+	Ttl float32 `json:"ttl"`
 
-	PrevTransferOut float32 `json:"prevTransferOut,omitempty"`
+	Type_ string `json:"type,omitempty"`
 
-	PrevAmount float32 `json:"prevAmount,omitempty"`
+	Closable bool `json:"closable,omitempty"`
 
-	PrevTimestamp time.Time `json:"prevTimestamp,omitempty"`
+	Persist bool `json:"persist,omitempty"`
 
-	DeltaDeposited float32 `json:"deltaDeposited,omitempty"`
+	WaitForVisibility bool `json:"waitForVisibility,omitempty"`
 
-	DeltaWithdrawn float32 `json:"deltaWithdrawn,omitempty"`
-
-	DeltaTransferIn float32 `json:"deltaTransferIn,omitempty"`
-
-	DeltaTransferOut float32 `json:"deltaTransferOut,omitempty"`
-
-	DeltaAmount float32 `json:"deltaAmount,omitempty"`
-
-	Deposited float32 `json:"deposited,omitempty"`
-
-	Withdrawn float32 `json:"withdrawn,omitempty"`
-
-	TransferIn float32 `json:"transferIn,omitempty"`
-
-	TransferOut float32 `json:"transferOut,omitempty"`
-
-	Amount float32 `json:"amount,omitempty"`
-
-	PendingCredit float32 `json:"pendingCredit,omitempty"`
-
-	PendingDebit float32 `json:"pendingDebit,omitempty"`
-
-	ConfirmedDebit float32 `json:"confirmedDebit,omitempty"`
-
-	Timestamp time.Time `json:"timestamp,omitempty"`
-
-	Addr string `json:"addr,omitempty"`
-
-	Script string `json:"script,omitempty"`
-
-	WithdrawalLock []string `json:"withdrawalLock,omitempty"`
+	Sound string `json:"sound,omitempty"`
 }

@@ -2,36 +2,46 @@ package main
 
 import (
 	"log"
-	"time"
-
 	"github.com/qct/bitmex-go/swagger"
-	. "github.com/qct/bitmex-go/restful"
+	//. "github.com/qct/bitmex-go/restful"
+	"golang.org/x/net/context"
 )
 
 var (
 	apiKey    = ""
 	secretKey = ""
-	config    = swagger.NewConfigurationWithKey(apiKey, secretKey)
+	config    = swagger.NewConfiguration()
+	apiClient = swagger.NewAPIClient(config)
 )
 
 func main() {
-	testOrderBook()
-	testPosition()
-	testWallet()
-	testMargin()
+
 	testChat()
+	//testOrderBook()
+	//testPosition()
+	//testWallet()
+	//testMargin()
 }
+
 func testChat() {
 	log.Println("-----------test chat------------")
-	chatApi := swagger.NewChatApiWithConfig(config)
-	chat, response, err := chatApi.ChatNew("hello", 2)
+	chatApi := apiClient.ChatApi
+	channel := make(map[string]interface{})
+	channel["channelID"] = 2.0
+	auth := context.WithValue(context.TODO(), swagger.ContextAPIKey, swagger.APIKey{
+		Key: "APIKEY",
+		Secret:"secret",
+		Prefix: "Bearer", // Omit if not necessary.
+	})
+	chat, response, err := chatApi.ChatNew(auth,"hello", channel)
 	if err != nil {
 		log.Println("error: ", err)
 	}
 	log.Println(response.Status)
-	log.Println(*chat)
+	log.Println(chat)
 }
-func testGetOrder() {
+
+/*func testGetOrder() {
 	log.Println("-----------test get order------------")
 	orderApi := swagger.NewOrderApiWithConfig(config)
 	orders, response, err := orderApi.OrderGetOrders("XBTUSD", "", "",
@@ -87,4 +97,4 @@ func testOrderBook() {
 	for _, v := range orderBooks.BidList {
 		log.Println(v)
 	}
-}
+}*/

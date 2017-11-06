@@ -9,20 +9,22 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"net/http"
 )
 
-func SetApiHeader(headerParams map[string]string, c *Configuration, httpMethod, path string,
-	formParams map[string]string, queryParams url.Values) {
+func SetAuthHeader(request *http.Request, apiKey APIKey, c *Configuration, httpMethod, path string,
+	formParams url.Values, queryParams url.Values) {
 	var expires = strconv.FormatInt(time.Now().Unix()+c.ExpireTime, 10)
 	bodyStr := ""
 	if len(formParams) > 1 {
 		bodyBytes, _ := json.Marshal(formParams)
 		bodyStr = string(bodyBytes)
 	}
-	//bodyStr = "{\"channelID\":2,\"message\":\"hello\"}"
-	headerParams["api-expires"] = expires
-	headerParams["api-key"] = c.ApiKey
-	headerParams["api-signature"] = Signature(c.SecretKey, httpMethod, path[22:], queryParams.Encode(), expires, bodyStr)
+
+	request.Header.Add("api-key", apiKey.Key)
+	request.Header.Add("api-expires", expires)
+	request.Header.Add("api-signature", Signature(apiKey.Secret, httpMethod, path[22:], queryParams.Encode(),
+		expires, bodyStr))
 }
 
 /**

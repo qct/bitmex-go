@@ -23,38 +23,36 @@ var (
 	_ context.Context
 )
 
-type OrderBookApiService service
+type AnnouncementApiService service
 
 
-/* OrderBookApiService Get current orderbook [deprecated, use /orderBook/L2].
+/* AnnouncementApiService Get site announcements.
 
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth.
- @return []OrderBook*/
-func (a *OrderBookApiService) OrderBookGet(symbol string, localVarOptionals map[string]interface{}) ([]OrderBook,  *http.Response, error) {
+     @param "columns" (string) Array of column names to fetch. If omitted, will return all columns.
+ @return []Announcement*/
+func (a *AnnouncementApiService) AnnouncementGet(localVarOptionals map[string]interface{}) ([]Announcement,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  []OrderBook
+	 	successPayload  []Announcement
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook"
+	localVarPath := a.client.cfg.BasePath + "/announcement"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
+	if err := typeCheckParameter(localVarOptionals["columns"], "string", "columns"); err != nil {
 		return successPayload, nil, err
 	}
 
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
+	if localVarTempParam, localVarOk := localVarOptionals["columns"].(string); localVarOk {
+		localVarQueryParams.Add("columns", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
@@ -101,36 +99,26 @@ func (a *OrderBookApiService) OrderBookGet(symbol string, localVarOptionals map[
 	return successPayload, localVarHttpResponse, err
 }
 
-/* OrderBookApiService Get current orderbook in vertical format.
-
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth per side. Send 0 for full depth.
- @return []OrderBookL2*/
-func (a *OrderBookApiService) OrderBookGetL2(symbol string, localVarOptionals map[string]interface{}) ([]OrderBookL2,  *http.Response, error) {
+/* AnnouncementApiService Get urgent (banner) announcements.
+ * @param ctx context.Context Authentication Context 
+ @return []Announcement*/
+func (a *AnnouncementApiService) AnnouncementGetUrgent(ctx context.Context, ) ([]Announcement,  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  []OrderBookL2
+	 	successPayload  []Announcement
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook/L2"
+	localVarPath := a.client.cfg.BasePath + "/announcement/urgent"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
-		return successPayload, nil, err
-	}
 
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
 
@@ -154,7 +142,43 @@ func (a *OrderBookApiService) OrderBookGetL2(symbol string, localVarOptionals ma
 	if localVarHttpHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
-	r, err := a.client.prepareRequest(nil, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["api-key"] = key
+		}
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["api-nonce"] = key
+		}
+	}
+	if ctx != nil {
+		// API Key Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			var key string
+			if auth.Prefix != "" {
+				key = auth.Prefix + " " + auth.Key
+			} else {
+				key = auth.Key
+			}
+			localVarHeaderParams["api-signature"] = key
+		}
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return successPayload, nil, err
 	}

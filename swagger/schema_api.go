@@ -23,38 +23,36 @@ var (
 	_ context.Context
 )
 
-type OrderBookApiService service
+type SchemaApiService service
 
 
-/* OrderBookApiService Get current orderbook [deprecated, use /orderBook/L2].
+/* SchemaApiService Get model schemata for data objects returned by this API.
 
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
  @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth.
- @return []OrderBook*/
-func (a *OrderBookApiService) OrderBookGet(symbol string, localVarOptionals map[string]interface{}) ([]OrderBook,  *http.Response, error) {
+     @param "model" (string) Optional model filter. If omitted, will return all models.
+ @return interface{}*/
+func (a *SchemaApiService) SchemaGet(localVarOptionals map[string]interface{}) (interface{},  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  []OrderBook
+	 	successPayload  interface{}
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook"
+	localVarPath := a.client.cfg.BasePath + "/schema"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
+	if err := typeCheckParameter(localVarOptionals["model"], "string", "model"); err != nil {
 		return successPayload, nil, err
 	}
 
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
+	if localVarTempParam, localVarOk := localVarOptionals["model"].(string); localVarOk {
+		localVarQueryParams.Add("model", parameterToString(localVarTempParam, ""))
 	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
@@ -101,36 +99,26 @@ func (a *OrderBookApiService) OrderBookGet(symbol string, localVarOptionals map[
 	return successPayload, localVarHttpResponse, err
 }
 
-/* OrderBookApiService Get current orderbook in vertical format.
+/* SchemaApiService Returns help text &amp; subject list for websocket usage.
 
- @param symbol Instrument symbol. Send a series (e.g. XBT) to get data for the nearest contract in that series.
- @param optional (nil or map[string]interface{}) with one or more of:
-     @param "depth" (float32) Orderbook depth per side. Send 0 for full depth.
- @return []OrderBookL2*/
-func (a *OrderBookApiService) OrderBookGetL2(symbol string, localVarOptionals map[string]interface{}) ([]OrderBookL2,  *http.Response, error) {
+ @return interface{}*/
+func (a *SchemaApiService) SchemaWebsocketHelp() (interface{},  *http.Response, error) {
 	var (
 		localVarHttpMethod = strings.ToUpper("Get")
 		localVarPostBody interface{}
 		localVarFileName string
 		localVarFileBytes []byte
-	 	successPayload  []OrderBookL2
+	 	successPayload  interface{}
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/orderBook/L2"
+	localVarPath := a.client.cfg.BasePath + "/schema/websocketHelp"
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if err := typeCheckParameter(localVarOptionals["depth"], "float32", "depth"); err != nil {
-		return successPayload, nil, err
-	}
 
-	localVarQueryParams.Add("symbol", parameterToString(symbol, ""))
-	if localVarTempParam, localVarOk := localVarOptionals["depth"].(float32); localVarOk {
-		localVarQueryParams.Add("depth", parameterToString(localVarTempParam, ""))
-	}
 	// to determine the Content-Type header
 	localVarHttpContentTypes := []string{ "application/json", "application/x-www-form-urlencoded",  }
 

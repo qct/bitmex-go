@@ -14,55 +14,31 @@ import (
 	"time"
 )
 
-type Wallet struct {
+type TradeBin struct {
 
-	Account float32 `json:"account"`
+	Timestamp time.Time `json:"timestamp"`
 
-	Currency string `json:"currency"`
+	Symbol string `json:"symbol"`
 
-	PrevDeposited float32 `json:"prevDeposited,omitempty"`
+	Open float64 `json:"open,omitempty"`
 
-	PrevWithdrawn float32 `json:"prevWithdrawn,omitempty"`
+	High float64 `json:"high,omitempty"`
 
-	PrevTransferIn float32 `json:"prevTransferIn,omitempty"`
+	Low float64 `json:"low,omitempty"`
 
-	PrevTransferOut float32 `json:"prevTransferOut,omitempty"`
+	Close float64 `json:"close,omitempty"`
 
-	PrevAmount float32 `json:"prevAmount,omitempty"`
+	Trades float32 `json:"trades,omitempty"`
 
-	PrevTimestamp time.Time `json:"prevTimestamp,omitempty"`
+	Volume float32 `json:"volume,omitempty"`
 
-	DeltaDeposited float32 `json:"deltaDeposited,omitempty"`
+	Vwap float64 `json:"vwap,omitempty"`
 
-	DeltaWithdrawn float32 `json:"deltaWithdrawn,omitempty"`
+	LastSize float32 `json:"lastSize,omitempty"`
 
-	DeltaTransferIn float32 `json:"deltaTransferIn,omitempty"`
+	Turnover float32 `json:"turnover,omitempty"`
 
-	DeltaTransferOut float32 `json:"deltaTransferOut,omitempty"`
+	HomeNotional float64 `json:"homeNotional,omitempty"`
 
-	DeltaAmount float32 `json:"deltaAmount,omitempty"`
-
-	Deposited float32 `json:"deposited,omitempty"`
-
-	Withdrawn float32 `json:"withdrawn,omitempty"`
-
-	TransferIn float32 `json:"transferIn,omitempty"`
-
-	TransferOut float32 `json:"transferOut,omitempty"`
-
-	Amount float32 `json:"amount,omitempty"`
-
-	PendingCredit float32 `json:"pendingCredit,omitempty"`
-
-	PendingDebit float32 `json:"pendingDebit,omitempty"`
-
-	ConfirmedDebit float32 `json:"confirmedDebit,omitempty"`
-
-	Timestamp time.Time `json:"timestamp,omitempty"`
-
-	Addr string `json:"addr,omitempty"`
-
-	Script string `json:"script,omitempty"`
-
-	WithdrawalLock []string `json:"withdrawalLock,omitempty"`
+	ForeignNotional float64 `json:"foreignNotional,omitempty"`
 }
