@@ -46,7 +46,7 @@ func NewConfiguration() *Configuration {
 		BasePath:      "https://www.bitmex.com/api/v1",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
-		ExpireTime:    5,
+		ExpireTime:    5,//seconds
 	}
 	return cfg
 }

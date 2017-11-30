@@ -84,7 +84,7 @@ func (a *UserApiService) UserCancelWithdrawal(token string) (Transaction,  *http
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -158,7 +158,7 @@ func (a *UserApiService) UserCheckReferralCode(localVarOptionals map[string]inte
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -225,7 +225,7 @@ func (a *UserApiService) UserConfirm(token string) (AccessToken,  *http.Response
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -336,7 +336,7 @@ func (a *UserApiService) UserConfirmEnableTFA(ctx context.Context, token string,
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -403,7 +403,7 @@ func (a *UserApiService) UserConfirmWithdrawal(token string) (Transaction,  *htt
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -514,7 +514,7 @@ func (a *UserApiService) UserDisableTFA(ctx context.Context, token string, local
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -615,7 +615,7 @@ func (a *UserApiService) UserGet(ctx context.Context, ) (User,  *http.Response, 
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -716,7 +716,7 @@ func (a *UserApiService) UserGetAffiliateStatus(ctx context.Context, ) (Affiliat
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -817,7 +817,7 @@ func (a *UserApiService) UserGetCommission(ctx context.Context, ) ([]UserCommiss
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -926,7 +926,7 @@ func (a *UserApiService) UserGetDepositAddress(ctx context.Context, localVarOpti
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1027,15 +1027,15 @@ func (a *UserApiService) UserGetMargin(ctx context.Context, localVarOptionals ma
 		return successPayload, nil, err
 	}
 
-	 localVarHttpResponse, err := a.client.callAPI(r)
-	 if err != nil || localVarHttpResponse == nil {
-		  return successPayload, localVarHttpResponse, err
-	 }
-	 defer localVarHttpResponse.Body.Close()
-	 if localVarHttpResponse.StatusCode >= 300 {
-		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
-	 }
-	
+    localVarHttpResponse, err := a.client.callAPI(r)
+    if err != nil || localVarHttpResponse == nil {
+      return successPayload, localVarHttpResponse, err
+    }
+    defer localVarHttpResponse.Body.Close()
+    if localVarHttpResponse.StatusCode >= 300 {
+    return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
+    }
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1144,7 +1144,7 @@ func (a *UserApiService) UserGetWallet(ctx context.Context, localVarOptionals ma
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1253,7 +1253,7 @@ func (a *UserApiService) UserGetWalletHistory(ctx context.Context, localVarOptio
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1362,7 +1362,7 @@ func (a *UserApiService) UserGetWalletSummary(ctx context.Context, localVarOptio
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1522,7 +1522,7 @@ func (a *UserApiService) UserLogoutAll(ctx context.Context, ) (float64,  *http.R
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1596,7 +1596,7 @@ func (a *UserApiService) UserMinWithdrawalFee(localVarOptionals map[string]inter
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1706,7 +1706,7 @@ func (a *UserApiService) UserRequestEnableTFA(ctx context.Context, localVarOptio
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1829,7 +1829,7 @@ func (a *UserApiService) UserRequestWithdrawal(ctx context.Context, currency str
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -1940,7 +1940,7 @@ func (a *UserApiService) UserSavePreferences(ctx context.Context, prefs string, 
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
@@ -2098,7 +2098,7 @@ func (a *UserApiService) UserUpdate(ctx context.Context, localVarOptionals map[s
 	 if localVarHttpResponse.StatusCode >= 300 {
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
-	
+
 	if err = json.NewDecoder(localVarHttpResponse.Body).Decode(&successPayload); err != nil {
 	 	return successPayload, localVarHttpResponse, err
 	}
