@@ -25,7 +25,7 @@ func main() {
     testPosition()
     testWallet()
     testGetOrder()
-    testChat()
+    //testChat()
 }
 
 func testMargin() {
@@ -119,7 +119,7 @@ func testChat() {
     log.Println(response.Status)
     if b, err := ioutil.ReadAll(response.Body); err == nil {
         log.Println("response body: ", string(b))
-    } else {
+    }else {
         log.Println(err)
     }
     log.Printf("%+v\n", chat)

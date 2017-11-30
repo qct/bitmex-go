@@ -21,7 +21,7 @@ func SetAuthHeader(request *http.Request, apiKey APIKey, c *Configuration, httpM
         bodyStr = string(bodyBytes)
     }
 
-    bodyStr = "{\"channelID\":\"2\",\"message\":\"hello\"}"
+    //bodyStr = "{\"channelID\":\"2\",\"message\":\"hello\"}"
 
     request.Header.Add("api-key", apiKey.Key)
     request.Header.Add("api-expires", expires)
