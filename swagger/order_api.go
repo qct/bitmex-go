@@ -17,6 +17,8 @@ import (
 	"golang.org/x/net/context"
 	"time"
 	"encoding/json"
+    "fmt"
+    "io/ioutil"
 )
 
 // Linger please
@@ -1112,53 +1114,22 @@ func (a *OrderApiService) OrderNew(ctx context.Context, symbol string, localVarO
 	if localVarTempParam, localVarOk := localVarOptionals["text"].(string); localVarOk {
 		localVarFormParams.Add("text", parameterToString(localVarTempParam, ""))
 	}
-	if ctx != nil {
-		// API Key Authentication
-		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-			var key string
-			if auth.Prefix != "" {
-				key = auth.Prefix + " " + auth.Key
-			} else {
-				key = auth.Key
-			}
-			localVarHeaderParams["api-key"] = key
-		}
-	}
-	if ctx != nil {
-		// API Key Authentication
-		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-			var key string
-			if auth.Prefix != "" {
-				key = auth.Prefix + " " + auth.Key
-			} else {
-				key = auth.Key
-			}
-			localVarHeaderParams["api-nonce"] = key
-		}
-	}
-	if ctx != nil {
-		// API Key Authentication
-		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-			var key string
-			if auth.Prefix != "" {
-				key = auth.Prefix + " " + auth.Key
-			} else {
-				key = auth.Key
-			}
-			localVarHeaderParams["api-signature"] = key
-		}
-	}
+
 	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
 	if err != nil {
 		return successPayload, nil, err
 	}
 
+	DebugHttpRequest(r)
+
 	 localVarHttpResponse, err := a.client.callAPI(r)
 	 if err != nil || localVarHttpResponse == nil {
-		  return successPayload, localVarHttpResponse, err
+         return successPayload, localVarHttpResponse, err
 	 }
 	 defer localVarHttpResponse.Body.Close()
 	 if localVarHttpResponse.StatusCode >= 300 {
+        bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+        fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	 }
 	

@@ -201,6 +201,19 @@ func (c *APIClient) prepareRequest(
 
     var body *bytes.Buffer
 
+    if len(formParams) > 0 {
+        tmpBody := make(map[string]string)
+        for k, v := range formParams {
+            tmpBody[k] = v[0]
+        }
+        bodyBytes, err := json.Marshal(tmpBody)
+        if err != nil {
+            return nil, err
+        }
+        postBody = string(bodyBytes)
+        formParams = url.Values{}
+    }
+
     // Detect postBody type and post.
     if postBody != nil {
         contentType := headerParams["Content-Type"]
@@ -329,7 +342,7 @@ func (c *APIClient) prepareRequest(
 
         // APIKey Authentication
         if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-            SetAuthHeader(localVarRequest, auth, c.cfg, method, path, formParams, queryParams)
+            SetAuthHeader(localVarRequest, auth, c.cfg, method, path, postBody.(string), queryParams)
         }
     }
 

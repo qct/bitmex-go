@@ -20,12 +20,37 @@ var (
 
 func main() {
 
-    testMargin()
-    testOrderBook()
-    testPosition()
-    testWallet()
-    testGetOrder()
+    //testMargin()
+    //testOrderBook()
+    //testPosition()
+    //testWallet()
+    //testGetOrder()
+    testBuy()
+    testSell()
+
     //testChat()
+}
+
+func testSell() {
+    log.Println("-----------test buy------------")
+    orderApi := restful.NewOrderApi(apiClient.OrderApi, auth)
+    result, orderId, err := orderApi.LimitSell("XBTUSD", 1.0, 20000, "qct_f_f_")
+    if err != nil {
+        log.Println("error: ", err)
+    }
+
+    log.Printf("result: %t, orderId: %s\n", result, orderId)
+}
+
+func testBuy() {
+    log.Println("-----------test buy------------")
+    orderApi := restful.NewOrderApi(apiClient.OrderApi, auth)
+    result, orderId, err := orderApi.LimitBuy("XBTUSD", 1.0, 13000, "qct_f_f_")
+    if err != nil {
+        log.Println("error: ", err)
+    }
+
+    log.Printf("result: %t, orderId: %s\n", result, orderId)
 }
 
 func testMargin() {
@@ -119,7 +144,7 @@ func testChat() {
     log.Println(response.Status)
     if b, err := ioutil.ReadAll(response.Body); err == nil {
         log.Println("response body: ", string(b))
-    }else {
+    } else {
         log.Println(err)
     }
     log.Printf("%+v\n", chat)

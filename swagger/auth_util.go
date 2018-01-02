@@ -4,29 +4,22 @@ import (
     "crypto/hmac"
     "crypto/sha256"
     "encoding/hex"
-    "encoding/json"
     "net/url"
     "strconv"
     "strings"
     "time"
     "net/http"
+    "net/http/httputil"
+    "fmt"
 )
 
-func SetAuthHeader(request *http.Request, apiKey APIKey, c *Configuration, httpMethod, path string,
-    formParams url.Values, queryParams url.Values) {
+func SetAuthHeader(request *http.Request, apiKey APIKey, c *Configuration, httpMethod, path, postBody string,
+    queryParams url.Values) {
     var expires = strconv.FormatInt(time.Now().Unix()+c.ExpireTime, 10)
-    bodyStr := ""
-    if len(formParams) > 1 {
-        bodyBytes, _ := json.Marshal(formParams)
-        bodyStr = string(bodyBytes)
-    }
-
-    //bodyStr = "{\"channelID\":\"2\",\"message\":\"hello\"}"
-
     request.Header.Add("api-key", apiKey.Key)
     request.Header.Add("api-expires", expires)
     request.Header.Add("api-signature", Signature(apiKey.Secret, httpMethod, path[22:], queryParams.Encode(),
-        expires, bodyStr))
+        expires, postBody))
 }
 
 /**
@@ -46,4 +39,13 @@ func CalSignature(apiSecret, payload string) string {
     sig := hmac.New(sha256.New, []byte(apiSecret))
     sig.Write([]byte(payload))
     return hex.EncodeToString(sig.Sum(nil))
+}
+
+// Save a copy of this request for debugging.
+func DebugHttpRequest(r *http.Request)  {
+    requestDump, err := httputil.DumpRequest(r, true)
+    if err != nil {
+        fmt.Println(err)
+    }
+    fmt.Println(string(requestDump))
 }
