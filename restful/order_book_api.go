@@ -18,30 +18,17 @@ type OrderBooks struct {
 }
 
 type OrderBookApi struct {
-	swaggerOrderBookApi *swagger.OrderBookApi
+	swaggerOrderBookApi *swagger.OrderBookApiService
 }
 
-func NewOrderBookApi() *OrderBookApi {
-	configuration := swagger.NewConfiguration()
-	swaggerOrderBookApi := swagger.OrderBookApi{Configuration: *configuration}
-	return &OrderBookApi{swaggerOrderBookApi: &swaggerOrderBookApi}
-}
-
-func NewOrderBookApiWithConfig(config *swagger.Configuration) *OrderBookApi {
-	swaggerOrderBookApi := swagger.OrderBookApi{Configuration: *config}
-	return &OrderBookApi{swaggerOrderBookApi: &swaggerOrderBookApi}
-}
-
-func NewOrderBookApiWithBasePath(basePath string) *OrderBookApi {
-	configuration := swagger.NewConfiguration()
-	configuration.BasePath = basePath
-
-	swaggerOrderBookApi := swagger.OrderBookApi{Configuration: *configuration}
-	return &OrderBookApi{swaggerOrderBookApi: &swaggerOrderBookApi}
+func NewOrderBookApi(swaggerOrderBookApi *swagger.OrderBookApiService) *OrderBookApi {
+	return &OrderBookApi{swaggerOrderBookApi: swaggerOrderBookApi}
 }
 
 func (a OrderBookApi) OrderBookGetL2(symbol string, depth float32) (*OrderBooks, error) {
-	rawOrderBooks, response, err := a.swaggerOrderBookApi.OrderBookGetL2(symbol, depth)
+	rawOrderBooks, response, err := a.swaggerOrderBookApi.OrderBookGetL2(symbol, map[string]interface{} {
+		"depth": depth,
+	})
 	if err != nil {
 		log.Println("error wihle getting orderbook: ", err)
 		return nil, err
