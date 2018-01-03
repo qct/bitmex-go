@@ -342,7 +342,11 @@ func (c *APIClient) prepareRequest(
 
         // APIKey Authentication
         if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
-            SetAuthHeader(localVarRequest, auth, c.cfg, method, path, postBody.(string), queryParams)
+            if postBody != nil {
+                SetAuthHeader(localVarRequest, auth, c.cfg, method, path, postBody.(string), queryParams)
+            } else {
+                SetAuthHeader(localVarRequest, auth, c.cfg, method, path, "", queryParams)
+            }
         }
     }
 
