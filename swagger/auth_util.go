@@ -4,13 +4,13 @@ import (
     "crypto/hmac"
     "crypto/sha256"
     "encoding/hex"
+    "fmt"
+    "net/http"
+    "net/http/httputil"
     "net/url"
     "strconv"
     "strings"
     "time"
-    "net/http"
-    "net/http/httputil"
-    "fmt"
 )
 
 func SetAuthHeader(request *http.Request, apiKey APIKey, c *Configuration, httpMethod, path, postBody string,
@@ -42,7 +42,7 @@ func CalSignature(apiSecret, payload string) string {
 }
 
 // Save a copy of this request for debugging.
-func DebugHttpRequest(r *http.Request)  {
+func DebugHttpRequest(r *http.Request) {
     requestDump, err := httputil.DumpRequest(r, true)
     if err != nil {
         fmt.Println(err)

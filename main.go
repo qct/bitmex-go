@@ -1,11 +1,11 @@
 package main
 
 import (
-    "log"
+    "github.com/qct/bitmex-go/restful"
     "github.com/qct/bitmex-go/swagger"
     "golang.org/x/net/context"
-    "github.com/qct/bitmex-go/restful"
     "io/ioutil"
+    "log"
 )
 
 var (
