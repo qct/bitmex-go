@@ -7,6 +7,7 @@ import (
     "github.com/satori/go.uuid"
     "golang.org/x/net/context"
     "strings"
+    "net/http"
 )
 
 type OrderApi struct {
@@ -18,16 +19,17 @@ func NewOrderApi(swaggerOrderApi *swagger.OrderApiService, ctx context.Context) 
     return &OrderApi{swaggerOrderApi: swaggerOrderApi, ctx: ctx}
 }
 
-func (o *OrderApi) LimitBuy(symbol string, orderQty float64, price float64, orderIDPrefix string) (result bool, orderId string, err error) {
+func (o *OrderApi) LimitBuy(symbol string, orderQty float64, price float64, clientOrderIDPrefix string) (resp *http.Response, orderId string, err error) {
     if symbol == "" {
-        return false, "", errors.New("symbol can NOT be empty")
+        return nil, "", errors.New("symbol can NOT be empty")
     }
     if price <= 0 {
-        return false, "", errors.New("price must be positive")
+        return nil, "", errors.New("price must be positive")
     }
-    if orderIDPrefix != "" {
+    clOrdID := ""
+    if clientOrderIDPrefix != "" {
         s := strings.Replace(base64.StdEncoding.EncodeToString(uuid.NewV4().Bytes()), "=", "", -1)
-        orderId = orderIDPrefix + s
+        clOrdID = clientOrderIDPrefix + s
     }
 
     params := map[string]interface{}{
@@ -35,39 +37,37 @@ func (o *OrderApi) LimitBuy(symbol string, orderQty float64, price float64, orde
         "ordType":  "Limit",
         "orderQty": float32(orderQty),
         "price":    price,
-        "clOrdID":  orderId,
+        "clOrdID":  clOrdID,
     }
     order, response, err := o.swaggerOrderApi.OrderNew(o.ctx, symbol, params)
-    if err != nil || response == nil {
-        return false, orderId, err
+    if err != nil || response.StatusCode != 200 {
+        return response, order.OrderID, err
     }
-    return true, order.OrderID, nil
+    return response, order.OrderID, nil
 }
 
-func (o *OrderApi) LimitSell(symbol string, orderQty float64, price float64, orderIDPrefix string) (result bool, orderId string, err error) {
+func (o *OrderApi) LimitSell(symbol string, orderQty float64, price float64, clientOrderIDPrefix string) (resp *http.Response, orderId string, err error) {
     if symbol == "" {
-        return false, "", errors.New("symbol can NOT be empty")
+        return nil, "", errors.New("symbol can NOT be empty")
     }
     if price <= 0 {
-        return false, "", errors.New("price must be positive")
+        return nil, "", errors.New("price must be positive")
     }
-    if orderIDPrefix != "" {
+    clOrdID := ""
+    if clientOrderIDPrefix != "" {
         s := strings.Replace(base64.StdEncoding.EncodeToString(uuid.NewV4().Bytes()), "=", "", -1)
-        orderId = orderIDPrefix + s
+        clOrdID = clientOrderIDPrefix + s
     }
 
     params := map[string]interface{}{
         "symbol":   symbol,
         "orderQty": float32(-orderQty),
         "price":    price,
-        "clOrdID":  orderId,
+        "clOrdID":  clOrdID,
     }
     order, response, err := o.swaggerOrderApi.OrderNew(o.ctx, symbol, params)
-    if err != nil {
-        return false, orderId, err
+    if err != nil || response.StatusCode != 200 {
+        return response, order.OrderID, err
     }
-    if response.StatusCode != 200 {
-        return false, orderId, errors.New("status: " + response.Status)
-    }
-    return true, order.OrderID, nil
+    return response, order.OrderID, nil
 }
