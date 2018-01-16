@@ -11,6 +11,7 @@ import (
     "strconv"
     "strings"
     "time"
+    "regexp"
 )
 
 func SetAuthHeader(request *http.Request, apiKey APIKey, c *Configuration, httpMethod, path, postBody string,
@@ -18,7 +19,8 @@ func SetAuthHeader(request *http.Request, apiKey APIKey, c *Configuration, httpM
     var expires = strconv.FormatInt(time.Now().Unix()+c.ExpireTime, 10)
     request.Header.Add("api-key", apiKey.Key)
     request.Header.Add("api-expires", expires)
-    request.Header.Add("api-signature", Signature(apiKey.Secret, httpMethod, path[22:], queryParams.Encode(),
+    p := regexp.MustCompile("/api.*").FindString(path)
+    request.Header.Add("api-signature", Signature(apiKey.Secret, httpMethod, p, queryParams.Encode(),
         expires, postBody))
 }
 
