@@ -34,23 +34,23 @@ func main() {
 func testSell() {
     log.Println("-----------test buy------------")
     orderApi := restful.NewOrderApi(apiClient.OrderApi, auth)
-    result, orderId, err := orderApi.LimitSell("XBTUSD", 1.0, 20000, "qct_f_f_")
+    resp, orderId, err := orderApi.LimitSell("XBTUSD", 1.0, 20000, "qct_f_f_")
     if err != nil {
         log.Println("error: ", err)
     }
 
-    log.Printf("result: %t, orderId: %s\n", result, orderId)
+    log.Printf("result: %s, orderId: %s\n", resp.Status, orderId)
 }
 
 func testBuy() {
     log.Println("-----------test buy------------")
     orderApi := restful.NewOrderApi(apiClient.OrderApi, auth)
-    result, orderId, err := orderApi.LimitBuy("XBTUSD", 1.0, 13000, "qct_f_f_")
+    resp, orderId, err := orderApi.LimitBuy("XBTUSD", 1.0, 13000, "qct_f_f_")
     if err != nil {
         log.Println("error: ", err)
     }
 
-    log.Printf("result: %t, orderId: %s\n", result, orderId)
+    log.Printf("response: %s, orderId: %s\n", resp.Status, orderId)
 }
 
 func testMargin() {
