@@ -128,7 +128,7 @@ func testGetOrder() {
         log.Println("error: ", err)
     }
     log.Println(response.Status)
-    log.Printf("margin: %+v\n", orders)
+    log.Printf("orders: %+v\n", orders)
 }
 
 func testChat() {
