@@ -137,7 +137,7 @@ log.Println(response.Status)
 log.Printf("orders: %+v\n", orders)
 ```
 
-7. Event chat through RESTFul api
+7. Even chat through RESTFul api
 ```
 apiClient = swagger.NewAPIClient(swagger.NewConfiguration())
 auth      = context.WithValue(context.TODO(), swagger.ContextAPIKey, swagger.APIKey{
