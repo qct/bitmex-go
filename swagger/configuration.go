@@ -18,6 +18,8 @@ const ContextOAuth2 int = 1
 const ContextBasicAuth int = 2
 const ContextAccessToken int = 3
 const ContextAPIKey int = 4
+const BASE_URL = "https://www.bitmex.com/api/v1"
+const TESTNET_BASE_URL = "https://testnet.bitmex.com/api/v1"
 
 type BasicAuth struct {
 	UserName string `json:"userName,omitempty"`
@@ -43,7 +45,17 @@ type Configuration struct {
 
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
-		BasePath:      "https://www.bitmex.com/api/v1",
+		BasePath:      BASE_URL,
+		DefaultHeader: make(map[string]string),
+		UserAgent:     "Swagger-Codegen/1.0.0/go",
+		ExpireTime:    5,//seconds
+	}
+	return cfg
+}
+
+func NewTestNetConfiguration() *Configuration {
+	cfg := &Configuration{
+		BasePath:      TESTNET_BASE_URL,
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
 		ExpireTime:    5,//seconds
