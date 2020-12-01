@@ -1,8 +1,8 @@
 package main
 
 import (
-	"bitmex-go/restful"
-	"bitmex-go/swagger"
+	"github.com/qct/bitmex-go/restful"
+	"github.com/qct/bitmex-go/swagger"
 	"golang.org/x/net/context"
 	"io/ioutil"
 	"log"

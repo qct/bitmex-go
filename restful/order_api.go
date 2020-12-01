@@ -1,9 +1,9 @@
 package restful
 
 import (
-	"bitmex-go/swagger"
 	"encoding/base64"
 	"errors"
+	"github.com/qct/bitmex-go/swagger"
 	"github.com/satori/go.uuid"
 	"golang.org/x/net/context"
 	"net/http"

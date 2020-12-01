@@ -4,7 +4,7 @@ import (
 	"log"
 	"sort"
 
-	"bitmex-go/swagger"
+	"github.com/qct/bitmex-go/swagger"
 )
 
 const (
