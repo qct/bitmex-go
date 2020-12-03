@@ -431,7 +431,7 @@ func (a *OrderApiService) OrderCancel(ctx context.Context, localVarOptionals map
 		return successPayload, nil, err
 	}
 
-	DebugHttpRequest(r)
+	//DebugHttpRequest(r)
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
 		return successPayload, localVarHttpResponse, err
@@ -1130,7 +1130,7 @@ func (a *OrderApiService) OrderNew(ctx context.Context, symbol string, localVarO
 		return successPayload, nil, err
 	}
 
-	DebugHttpRequest(r)
+	//DebugHttpRequest(r)
 
 	localVarHttpResponse, err := a.client.callAPI(r)
 	if err != nil || localVarHttpResponse == nil {
