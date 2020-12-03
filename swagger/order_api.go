@@ -197,6 +197,8 @@ func (a *OrderApiService) OrderAmend(ctx context.Context, localVarOptionals map[
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
@@ -306,6 +308,8 @@ func (a *OrderApiService) OrderAmendBulk(ctx context.Context, localVarOptionals 
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
@@ -434,6 +438,8 @@ func (a *OrderApiService) OrderCancel(ctx context.Context, localVarOptionals map
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
@@ -556,6 +562,8 @@ func (a *OrderApiService) OrderCancelAll(ctx context.Context, localVarOptionals 
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
@@ -658,6 +666,8 @@ func (a *OrderApiService) OrderCancelAllAfter(ctx context.Context, timeout float
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
@@ -769,6 +779,8 @@ func (a *OrderApiService) OrderClosePosition(ctx context.Context, symbol string,
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
@@ -927,6 +939,8 @@ func (a *OrderApiService) OrderGetOrders(ctx context.Context, localVarOptionals 
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
@@ -1235,6 +1249,8 @@ func (a *OrderApiService) OrderNewBulk(ctx context.Context, localVarOptionals ma
 	}
 	defer localVarHttpResponse.Body.Close()
 	if localVarHttpResponse.StatusCode >= 300 {
+		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
+		fmt.Printf("%s\n", string(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
