@@ -1,11 +1,14 @@
 package main
 
 import (
+	"encoding/base64"
 	"github.com/qct/bitmex-go/restful"
 	"github.com/qct/bitmex-go/swagger"
+	uuid "github.com/satori/go.uuid"
 	"golang.org/x/net/context"
 	"io/ioutil"
 	"log"
+	"strings"
 )
 
 var (
@@ -19,7 +22,6 @@ var (
 )
 
 func main() {
-
 	//testMargin()
 	//testOrderBook()
 	//testPosition()
@@ -34,7 +36,9 @@ func main() {
 func testSell() {
 	log.Println("-----------test buy------------")
 	orderApi := restful.NewOrderApi(apiClient.OrderApi, auth)
-	resp, orderId, err := orderApi.LimitSell("XBTUSD", 1.0, 20000, "qct_f_f_")
+	s := strings.Replace(base64.StdEncoding.EncodeToString(uuid.NewV4().Bytes()), "=", "", -1)
+	clOrdID := "qct_f_f_" + s
+	resp, orderId, err := orderApi.LimitSell("XBTUSD", 1.0, 20000, clOrdID)
 	if err != nil {
 		log.Println("error: ", err)
 	}
@@ -45,7 +49,10 @@ func testSell() {
 func testBuy() {
 	log.Println("-----------test buy------------")
 	orderApi := restful.NewOrderApi(apiClient.OrderApi, auth)
-	resp, orderId, err := orderApi.LimitBuy("XBTUSD", 1.0, 13000, "qct_f_f_")
+	s := strings.Replace(base64.StdEncoding.EncodeToString(uuid.NewV4().Bytes()), "=", "", -1)
+	clOrdID := "qct_f_f_" + s
+
+	resp, orderId, err := orderApi.LimitBuy("XBTUSD", 1.0, 13000, clOrdID)
 	if err != nil {
 		log.Println("error: ", err)
 	}
