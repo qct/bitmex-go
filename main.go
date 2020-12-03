@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"github.com/qct/bitmex-go/restful"
 	"github.com/qct/bitmex-go/swagger"
 	uuid "github.com/satori/go.uuid"
@@ -197,22 +198,20 @@ func testGetOrder() {
 	log.Println("-----------test get order------------")
 	orderApi := apiClient.OrderApi
 	params := map[string]interface{}{
-		"symbol":    "XBTUSD",
-		"filter":    "",
-		"columns":   "",
-		"count":     float32(5),
-		"start":     nil,
-		"reverse":   true,
-		"startTime": nil,
-		"endTime":   nil,
+		"symbol":  "XBTUSD",
+		"filter":  "{\"opsen\":true}",
+		"count":   float32(5),
+		"reverse": true,
 	}
 	//time.Now().AddDate(0, 0, -1), time.Now()
 	orders, response, err := orderApi.OrderGetOrders(auth, params)
+	bodyBytes, _ := ioutil.ReadAll(response.Body)
+	fmt.Printf("%s\n", string(bodyBytes))
 	if err != nil {
 		log.Println("error: ", err)
 	}
 	log.Println(response.Status)
-	log.Printf("orders: %+v\n", orders)
+	log.Println("orders: ", len(orders))
 }
 
 func testChat() {

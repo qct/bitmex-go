@@ -11,6 +11,7 @@
 package swagger
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"golang.org/x/net/context"
@@ -310,6 +311,7 @@ func (a *OrderApiService) OrderAmendBulk(ctx context.Context, localVarOptionals 
 	if localVarHttpResponse.StatusCode >= 300 {
 		bodyBytes, _ := ioutil.ReadAll(localVarHttpResponse.Body)
 		fmt.Printf("%s\n", string(bodyBytes))
+		localVarHttpResponse.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
 		return successPayload, localVarHttpResponse, reportError(localVarHttpResponse.Status)
 	}
 
