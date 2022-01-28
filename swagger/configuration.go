@@ -48,6 +48,7 @@ type BasicAuth struct {
 type APIKey struct {
 	Key    string
 	Prefix string
+	Secret string
 }
 
 type Configuration struct {
@@ -57,6 +58,8 @@ type Configuration struct {
 	DefaultHeader map[string]string `json:"defaultHeader,omitempty"`
 	UserAgent     string            `json:"userAgent,omitempty"`
 	HTTPClient    *http.Client
+
+	ExpireTime int64
 }
 
 func NewConfiguration() *Configuration {
@@ -64,6 +67,7 @@ func NewConfiguration() *Configuration {
 		BasePath:      "https://www.bitmex.com/api/v1",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
+		ExpireTime:    5, //seconds
 	}
 	return cfg
 }

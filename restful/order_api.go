@@ -29,7 +29,6 @@ func (o *OrderApi) LimitBuy(symbol string, orderQty float32, price float64, clOr
 		OrderQty: optional.NewFloat32(orderQty),
 		Price:    optional.NewFloat64(price),
 		ClOrdID:  optional.NewString(clOrdID),
-		OrdType:  optional.NewString("Limit"),
 	}
 	order, response, err := o.swaggerOrderApi.OrderNew(o.ctx, symbol, params)
 	if err != nil || response.StatusCode != 200 {

@@ -21,10 +21,11 @@ var (
 		BasePath:      "https://testnet.bitmex.com/api/v1",
 		DefaultHeader: make(map[string]string),
 		UserAgent:     "Swagger-Codegen/1.0.0/go",
+		ExpireTime:    5, //seconds
 	})
 	auth = context.WithValue(context.TODO(), swagger.ContextAPIKey, swagger.APIKey{
-		Key:    apiSecret,
-		Prefix: apiKey,
+		Key:    apiKey,
+		Secret: apiSecret,
 	})
 )
 
@@ -34,11 +35,8 @@ func Test_all(t *testing.T) {
 	Test_testPosition(t)
 	Test_testWallet(t)
 	Test_testGetOrder(t)
-	//testBuy()
-	//testSell()
-	//testBulkCreate()
-	//testCancel()
-	//testBulkAmend()
+	Test_testBuy(t)
+	Test_testSell(t)
 	//testChat()
 }
 
@@ -46,21 +44,21 @@ func Test_testBuy(t *testing.T) {
 	log.Println("-----------test buy------------")
 	orderApi := restful.NewOrderApi(apiClient.OrderApi, auth)
 
-	resp, orderId, err := orderApi.LimitBuy("XBTUSD", 1.0, 13000, generateClOrdID())
+	resp, orderId, err := orderApi.LimitBuy("XBTUSD", 100.0, 36000, generateClOrdID())
 	if err != nil {
-		log.Println("error: ", err)
+		log.Println("error: ", string(err.(swagger.GenericSwaggerError).Body()))
 	}
 
 	log.Printf("response: %s, orderId: %s\n", resp.Status, orderId)
+	testCancel(orderId)
 }
 
 func Test_testGetOrder(t *testing.T) {
 	log.Println("-----------test get order------------")
 	orderApi := apiClient.OrderApi
-	//time.Now().AddDate(0, 0, -1), time.Now()
 	orders, response, err := orderApi.OrderGetOrders(auth, &swagger.OrderApiOrderGetOrdersOpts{
 		Symbol:  optional.NewString("XBTUSD"),
-		Filter:  optional.NewString("{\"opsen\":true}"),
+		Filter:  optional.NewString("{\"open\":true}"),
 		Count:   optional.NewFloat32(5),
 		Reverse: optional.NewBool(true),
 	})
@@ -118,12 +116,13 @@ func Test_testSell(t *testing.T) {
 	log.Println("-----------test buy------------")
 	orderApi := restful.NewOrderApi(apiClient.OrderApi, auth)
 
-	resp, orderId, err := orderApi.LimitSell("XBTUSD", 1.0, 20000, generateClOrdID())
+	resp, orderId, err := orderApi.LimitSell("XBTUSD", 100.0, 60000, generateClOrdID())
 	if err != nil {
 		log.Println("error: ", err)
 	}
 
 	log.Printf("result: %s, orderId: %s\n", resp.Status, orderId)
+	testCancel(orderId)
 }
 
 func Test_testWallet(t *testing.T) {
@@ -134,6 +133,7 @@ func Test_testWallet(t *testing.T) {
 	})
 	if err != nil {
 		log.Println("error: ", err)
+		log.Println("error: ", string(err.(swagger.GenericSwaggerError).Body()))
 	}
 	log.Println(response.Status)
 	log.Printf("wallet: %+v\n", wallet)
@@ -146,7 +146,7 @@ func Test_testChat(t *testing.T) {
 		ChannelID: optional.NewFloat64(2.0),
 	})
 	if err != nil {
-		log.Println("error: ", err)
+		log.Println("error: ", string(err.(swagger.GenericSwaggerError).Body()))
 	}
 	log.Println(response.Status)
 	if b, err := ioutil.ReadAll(response.Body); err == nil {
@@ -157,81 +157,20 @@ func Test_testChat(t *testing.T) {
 	log.Printf("%+v\n", chat)
 }
 
-//func testBulkAmend() {
-//	log.Println("-----------testBulkAmend------------")
-//	bulkCreated := testBulkCreate()
-//	var toAmend []swagger.Order
-//	for _, o := range bulkCreated {
-//		a := swagger.Order{
-//			OrderQty: o.OrderQty + 1,
-//			Price:    o.Price + 1,
-//			OrderID:  o.OrderID,
-//		}
-//		toAmend = append(toAmend, a)
-//	}
-//	orderJson, _ := json.Marshal(toAmend)
-//	amend, resp, err := apiClient.OrderApi.OrderAmendBulk(auth, map[string]interface{}{
-//		"orders": string(orderJson),
-//	})
-//	if err != nil {
-//		if resp != nil {
-//			log.Println(resp.Status)
-//		}
-//		log.Println("AmendBulkOrders err: ", err)
-//	}
-//	log.Println("amended: ", len(amend))
-//}
-
-//func testCancel() {
-//	log.Println("-----------testCancel------------")
-//	bulkCreated := testBulkCreate()
-//	var orderIds []string
-//	for _, o := range bulkCreated {
-//		orderIds = append(orderIds, o.OrderID)
-//	}
-//	cancel, resp, err := apiClient.OrderApi.OrderCancel(auth, map[string]interface{}{
-//		"orderID": orderIds,
-//		"text":    "Cancelled by API",
-//	})
-//	if err != nil {
-//		if resp != nil {
-//			log.Println(resp.Status)
-//		}
-//		log.Println("CancelBulkOrders err: ", err)
-//	}
-//	log.Println("cancelled: ", len(cancel))
-//}
-
-//func testBulkCreate() []swagger.Order {
-//	log.Println("-----------testBulkCreate------------")
-//	orders := []swagger.Order{
-//		{
-//			Symbol:   "XBTUSD",
-//			ClOrdID:  generateClOrdID(),
-//			Side:     "Sell",
-//			Price:    20000,
-//			OrderQty: 1,
-//		},
-//		{
-//			Symbol:   "XBTUSD",
-//			ClOrdID:  generateClOrdID(),
-//			Side:     "Sell",
-//			Price:    20001,
-//			OrderQty: 2,
-//		},
-//	}
-//	orderJson, _ := json.Marshal(orders)
-//	bulk, resp, err := apiClient.OrderApi.OrderNewBulk(auth, map[string]interface{}{
-//		"orders": string(orderJson),
-//	})
-//	if err != nil {
-//		if resp != nil {
-//			log.Println(resp.Status)
-//		}
-//		log.Println("CreateBulkOrders err: ", err)
-//	}
-//	return bulk
-//}
+func testCancel(orderID string) {
+	log.Println("-----------testCancel------------")
+	cancel, resp, err := apiClient.OrderApi.OrderCancel(auth, &swagger.OrderApiOrderCancelOpts{
+		OrderID: optional.NewString(orderID),
+		Text:    optional.NewString("Cancelled by API"),
+	})
+	if err != nil {
+		if resp != nil {
+			log.Println(resp.Status)
+		}
+		log.Println("CancelledOrder err: ", string(err.(swagger.GenericSwaggerError).Body()))
+	}
+	log.Println("cancelled: ", len(cancel))
+}
 
 func generateClOrdID() string {
 	s := strings.Replace(base64.StdEncoding.EncodeToString(uuid.NewV4().Bytes()), "=", "", -1)

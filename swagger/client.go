@@ -224,6 +224,23 @@ func (c *APIClient) prepareRequest(
 
 	var body *bytes.Buffer
 
+	if len(formParams) > 0 {
+		tmpBody := make(map[string]interface{})
+		for k, v := range formParams {
+			if len(v) > 1 {
+				tmpBody[k] = v
+			} else {
+				tmpBody[k] = v[0]
+			}
+		}
+		bodyBytes, err := json.Marshal(tmpBody)
+		if err != nil {
+			return nil, err
+		}
+		postBody = string(bodyBytes)
+		formParams = url.Values{}
+	}
+
 	// Detect postBody type and post.
 	if postBody != nil {
 		contentType := headerParams["Content-Type"]
@@ -357,6 +374,20 @@ func (c *APIClient) prepareRequest(
 		// AccessToken Authentication
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
 			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
+		}
+
+		// before setting auth header, remove Api-Nonce, Api-Key, Api-Signature
+		localVarRequest.Header.Del("Api-Expires")
+		localVarRequest.Header.Del("Api-Key")
+		localVarRequest.Header.Del("Api-Signature")
+
+		// APIKey Authentication
+		if auth, ok := ctx.Value(ContextAPIKey).(APIKey); ok {
+			if postBody != nil {
+				SetAuthHeader(localVarRequest, auth, c.cfg, method, path, postBody.(string), queryParams)
+			} else {
+				SetAuthHeader(localVarRequest, auth, c.cfg, method, path, "", queryParams)
+			}
 		}
 	}
 
