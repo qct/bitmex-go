@@ -30,13 +30,15 @@ var (
 )
 
 func Test_all(t *testing.T) {
-	Test_testMargin(t)
-	Test_testOrderBook(t)
-	Test_testPosition(t)
-	Test_testWallet(t)
-	Test_testGetOrder(t)
-	Test_testBuy(t)
-	Test_testSell(t)
+	//Test_testMargin(t)
+	//Test_testOrderBook(t)
+	//Test_testPosition(t)
+	//Test_testWallet(t)
+	//Test_testGetOrder(t)
+	//Test_testBuy(t)
+	//Test_testSell(t)
+
+	//testCancel("24e81603-e31f-431e-b06c-3b93226c8913,77a45818-ba95-451e-84c7-6667cd3b0912")
 	//testChat()
 }
 
@@ -59,7 +61,7 @@ func Test_testGetOrder(t *testing.T) {
 	orders, response, err := orderApi.OrderGetOrders(auth, &swagger.OrderApiOrderGetOrdersOpts{
 		Symbol:  optional.NewString("XBTUSD"),
 		Filter:  optional.NewString("{\"open\":true}"),
-		Count:   optional.NewFloat32(5),
+		Count:   optional.NewFloat32(50),
 		Reverse: optional.NewBool(true),
 	})
 	bodyBytes, _ := ioutil.ReadAll(response.Body)
@@ -67,8 +69,10 @@ func Test_testGetOrder(t *testing.T) {
 	if err != nil {
 		log.Println("error: ", err)
 	}
-	log.Println(response.Status)
 	log.Println("orders: ", len(orders))
+	for _, order := range orders {
+		log.Println(order.OrderID)
+	}
 }
 
 func Test_testMargin(t *testing.T) {

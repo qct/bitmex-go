@@ -160,3 +160,38 @@ log.Printf("%+v\n", chat)
 ## Roadmap
 * I only tested some API I will use, in the near future, I will keep adding and fixing to make more API available.
 * make a PR to bitmex api collectors to generate a ready to use golang client.
+
+
+## Changelog
+1.swagger.json, in definitions:
+```
+"OrderBookL2": {
+      "properties": {
+        "id": { "type": "number", "format": "int64" },
+        "symbol": { "type": "string" },
+        "side": { "type": "string" },
+        "size": { "type": "number", "format": "int64" },
+        "price": { "format": "double", "type": "number" }
+      },
+      "required": ["id", "symbol", "side"],
+      "type": "object"
+    },
+```
+
+2.api_order.go, cancel multi orders
+```go
+if localVarOptionals != nil && localVarOptionals.OrderID.IsSet() {
+    //localVarFormParams.Add("orderID", parameterToString(localVarOptionals.OrderID.Value(), ""))
+    ids := strings.Split(localVarOptionals.OrderID.Value(), ",")
+    for _, id := range ids {
+        localVarFormParams.Add("orderID", id)
+    }
+}
+if localVarOptionals != nil && localVarOptionals.ClOrdID.IsSet() {
+    //localVarFormParams.Add("clOrdID", parameterToString(localVarOptionals.ClOrdID.Value(), ""))
+    ids := strings.Split(localVarOptionals.ClOrdID.Value(), ",")
+    for _, id := range ids {
+        localVarFormParams.Add("clOrdID", id)
+    }
+}
+```

@@ -306,10 +306,18 @@ func (a *OrderApiService) OrderCancel(ctx context.Context, localVarOptionals *Or
 		localVarHeaderParams["Accept"] = localVarHttpHeaderAccept
 	}
 	if localVarOptionals != nil && localVarOptionals.OrderID.IsSet() {
-		localVarFormParams.Add("orderID", parameterToString(localVarOptionals.OrderID.Value(), ""))
+		//localVarFormParams.Add("orderID", parameterToString(localVarOptionals.OrderID.Value(), ""))
+		ids := strings.Split(localVarOptionals.OrderID.Value(), ",")
+		for _, id := range ids {
+			localVarFormParams.Add("orderID", id)
+		}
 	}
 	if localVarOptionals != nil && localVarOptionals.ClOrdID.IsSet() {
-		localVarFormParams.Add("clOrdID", parameterToString(localVarOptionals.ClOrdID.Value(), ""))
+		//localVarFormParams.Add("clOrdID", parameterToString(localVarOptionals.ClOrdID.Value(), ""))
+		ids := strings.Split(localVarOptionals.ClOrdID.Value(), ",")
+		for _, id := range ids {
+			localVarFormParams.Add("clOrdID", id)
+		}
 	}
 	if localVarOptionals != nil && localVarOptionals.Text.IsSet() {
 		localVarFormParams.Add("text", parameterToString(localVarOptionals.Text.Value(), ""))
