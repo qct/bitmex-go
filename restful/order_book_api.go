@@ -1,6 +1,8 @@
 package restful
 
 import (
+	"context"
+	"github.com/antihax/optional"
 	"log"
 	"sort"
 
@@ -26,9 +28,8 @@ func NewOrderBookApi(swaggerOrderBookApi *swagger.OrderBookApiService) *OrderBoo
 }
 
 func (a OrderBookApi) OrderBookGetL2(symbol string, depth float32) (*OrderBooks, error) {
-	rawOrderBooks, response, err := a.swaggerOrderBookApi.OrderBookGetL2(symbol, map[string]interface{}{
-		"depth": depth,
-	})
+	rawOrderBooks, response, err := a.swaggerOrderBookApi.OrderBookGetL2(context.Background(), symbol,
+		&swagger.OrderBookApiOrderBookGetL2Opts{Depth: optional.NewFloat32(depth)})
 	if err != nil {
 		log.Println("error wihle getting orderbook: ", err)
 		return nil, err
