@@ -12,11 +12,12 @@ package swagger
 
 import (
 	"context"
-	"github.com/antihax/optional"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -202,7 +203,7 @@ func (a *InstrumentApiService) InstrumentGet(ctx context.Context, localVarOption
 
 /*
 InstrumentApiService Get all active instruments and instruments that have expired in &lt;24hrs.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []Instrument
 */
@@ -330,7 +331,7 @@ func (a *InstrumentApiService) InstrumentGetActive(ctx context.Context) ([]Instr
 
 /*
 InstrumentApiService Helper method. Gets all active instruments and all indices. This is a join of the result of /indices and /active.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []Instrument
 */
@@ -459,7 +460,7 @@ func (a *InstrumentApiService) InstrumentGetActiveAndIndices(ctx context.Context
 /*
 InstrumentApiService Return all active contract series and interval pairs.
 This endpoint is useful for determining which pairs are live. It returns two arrays of   strings. The first is intervals, such as &#x60;[\&quot;XBT:perpetual\&quot;, \&quot;XBT:quarterly\&quot;, \&quot;XBT:biquarterly\&quot;, \&quot;ETH:quarterly\&quot;, ...]&#x60;. These identifiers are usable in any query&#39;s &#x60;symbol&#x60; param. The second array is the current resolution of these intervals. Results are mapped at the same index.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return InstrumentInterval
 */
@@ -761,7 +762,7 @@ func (a *InstrumentApiService) InstrumentGetCompositeIndex(ctx context.Context, 
 
 /*
 InstrumentApiService Get all price indices.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []Instrument
 */

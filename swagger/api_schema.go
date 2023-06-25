@@ -12,11 +12,12 @@ package swagger
 
 import (
 	"context"
-	"github.com/antihax/optional"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -166,7 +167,7 @@ func (a *SchemaApiService) SchemaGet(ctx context.Context, localVarOptionals *Sch
 
 /*
 SchemaApiService Returns help text &amp; subject list for websocket usage.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return interface{}
 */

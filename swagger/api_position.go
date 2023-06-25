@@ -12,11 +12,12 @@ package swagger
 
 import (
 	"context"
-	"github.com/antihax/optional"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -397,9 +398,9 @@ func (a *PositionApiService) PositionIsolateMargin(ctx context.Context, symbol s
 /*
 PositionApiService Transfer equity in or out of a position.
 When margin is isolated on a position, use this function to add or remove margin from the position. Note that you cannot remove margin below the initial margin threshold.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param symbol Symbol of position to isolate.
- * @param amount Amount to transfer, in Satoshis. May be negative.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param symbol Symbol of position to isolate.
+  - @param amount Amount to transfer, in Satoshis. May be negative.
 
 @return Position
 */
@@ -569,9 +570,9 @@ func (a *PositionApiService) PositionTransferIsolatedMargin(ctx context.Context,
 /*
 PositionApiService Choose leverage for a position.
 Users can choose an isolated leverage. This will automatically enable isolated margin.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param symbol Symbol of position to adjust.
- * @param leverage Leverage value. Send a number between 0.01 and 100 to enable isolated margin with a fixed leverage. Send 0 to enable cross margin.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param symbol Symbol of position to adjust.
+  - @param leverage Leverage value. Send a number between 0.01 and 100 to enable isolated margin with a fixed leverage. Send 0 to enable cross margin.
 
 @return Position
 */
@@ -741,9 +742,9 @@ func (a *PositionApiService) PositionUpdateLeverage(ctx context.Context, symbol 
 /*
 PositionApiService Update your risk limit.
 Risk Limits limit the size of positions you can trade at various margin levels. Larger positions require more margin. Please see the Risk Limit documentation for more details.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param symbol Symbol of position to update risk limit on.
- * @param riskLimit New Risk Limit, in Satoshis.
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param symbol Symbol of position to update risk limit on.
+  - @param riskLimit New Risk Limit, in Satoshis.
 
 @return Position
 */

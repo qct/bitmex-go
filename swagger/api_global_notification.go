@@ -28,7 +28,7 @@ type GlobalNotificationApiService service
 /*
 GlobalNotificationApiService Get your current GlobalNotifications.
 This is an upcoming feature and currently does not return data.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []GlobalNotification
 */

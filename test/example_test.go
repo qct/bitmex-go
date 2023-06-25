@@ -4,10 +4,13 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+
 	"github.com/antihax/optional"
+	"github.com/google/uuid"
+
 	"github.com/qct/bitmex-go/restful"
 	"github.com/qct/bitmex-go/swagger"
-	uuid "github.com/satori/go.uuid"
+
 	"io/ioutil"
 	"log"
 	"strings"
@@ -177,6 +180,8 @@ func testCancel(orderID string) {
 }
 
 func generateClOrdID() string {
-	s := strings.Replace(base64.StdEncoding.EncodeToString(uuid.NewV4().Bytes()), "=", "", -1)
+	u := uuid.NewString()
+	bytes := []byte(u)[:16]
+	s := strings.Replace(base64.StdEncoding.EncodeToString(bytes), "=", "", -1)
 	return "qct_f_f_" + s
 }

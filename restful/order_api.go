@@ -1,11 +1,13 @@
 package restful
 
 import (
+	"context"
 	"errors"
-	"github.com/antihax/optional"
-	"github.com/qct/bitmex-go/swagger"
-	"golang.org/x/net/context"
 	"net/http"
+
+	"github.com/antihax/optional"
+
+	"github.com/qct/bitmex-go/swagger"
 )
 
 type OrderApi struct {

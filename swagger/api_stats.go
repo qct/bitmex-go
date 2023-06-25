@@ -27,7 +27,7 @@ type StatsApiService service
 
 /*
 StatsApiService Get exchange-wide and per-series turnover and volume statistics.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []Stats
 */
@@ -155,7 +155,7 @@ func (a *StatsApiService) StatsGet(ctx context.Context) ([]Stats, *http.Response
 
 /*
 StatsApiService Get historical exchange-wide and per-series turnover and volume statistics.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []StatsHistory
 */
@@ -283,7 +283,7 @@ func (a *StatsApiService) StatsHistory(ctx context.Context) ([]StatsHistory, *ht
 
 /*
 StatsApiService Get a summary of exchange statistics in USD.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return []StatsUsd
 */

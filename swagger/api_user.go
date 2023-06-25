@@ -12,12 +12,13 @@ package swagger
 
 import (
 	"context"
-	"github.com/antihax/optional"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/antihax/optional"
 )
 
 // Linger please
@@ -29,8 +30,8 @@ type UserApiService service
 
 /*
 UserApiService Cancel a withdrawal.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param token
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param token
 
 @return Transaction
 */
@@ -298,9 +299,9 @@ func (a *UserApiService) UserCheckReferralCode(ctx context.Context, localVarOpti
 
 /*
 UserApiService Register your communication token for mobile clients
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param token
- * @param platformAgent
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param token
+  - @param platformAgent
 
 @return []CommunicationToken
 */
@@ -469,8 +470,8 @@ func (a *UserApiService) UserCommunicationToken(ctx context.Context, token strin
 
 /*
 UserApiService Confirm your email address with a token.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param token
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param token
 
 @return AccessToken
 */
@@ -599,8 +600,8 @@ func (a *UserApiService) UserConfirm(ctx context.Context, token string) (AccessT
 
 /*
 UserApiService Confirm a withdrawal.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param token
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param token
 
 @return Transaction
 */
@@ -729,7 +730,7 @@ func (a *UserApiService) UserConfirmWithdrawal(ctx context.Context, token string
 
 /*
 UserApiService Get your user model.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return User
 */
@@ -1073,7 +1074,7 @@ func (a *UserApiService) UserGetAffiliateStatus(ctx context.Context, localVarOpt
 
 /*
 UserApiService Get your account&#39;s commission status.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return UserCommissionsBySymbol
 */
@@ -1417,9 +1418,9 @@ func (a *UserApiService) UserGetDepositAddress(ctx context.Context, localVarOpti
 
 /*
 UserApiService Get the execution history by day.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param symbol
- * @param timestamp
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param symbol
+  - @param timestamp
 
 @return interface{}
 */
@@ -1765,7 +1766,7 @@ func (a *UserApiService) UserGetMargin(ctx context.Context, localVarOptionals *U
 
 /*
 UserApiService Get 7 days worth of Quote Fill Ratio statistics.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return QuoteFillRatio
 */
@@ -1932,7 +1933,7 @@ func (a *UserApiService) UserGetQuoteFillRatio(ctx context.Context) (QuoteFillRa
 
 /*
 UserApiService Get Quote Value Ratio statistics over the last 3 days
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return QuoteValueRatio
 */
@@ -2099,7 +2100,7 @@ func (a *UserApiService) UserGetQuoteValueRatio(ctx context.Context) (QuoteValue
 
 /*
 UserApiService Get your 30 days USD average trading volume
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 
 @return TradingVolume
 */
@@ -2807,9 +2808,7 @@ func (a *UserApiService) UserGetWalletSummary(ctx context.Context, localVarOptio
 
 /*
 UserApiService Log out of BitMEX.
- * @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-
-
+  - @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 */
 func (a *UserApiService) UserLogout(ctx context.Context) (*http.Response, error) {
 	var (

@@ -2,9 +2,10 @@ package restful
 
 import (
 	"context"
-	"github.com/antihax/optional"
 	"log"
 	"sort"
+
+	"github.com/antihax/optional"
 
 	"github.com/qct/bitmex-go/swagger"
 )
